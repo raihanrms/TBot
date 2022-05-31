@@ -1,9 +1,13 @@
+from email import message
 import telebot
 import os
 import parse
 
 from click import command
 from urllib.parse import urlparse
+
+API_KEY = os.getenv('API_KEY')
+bot = telebot.TeleBot(API_KEY)
 
 PARSE_MODE = "MarkdownV2"
 AVAILABLE_COMMANDS = ["/start", "/help", "/test"]
@@ -12,8 +16,7 @@ STARTER = """
 Hi\! I am RmsBot\, a bot built by [raihanrms](https://github.com/raihanrms)
 `This is a work in progress bot, that can save time for \open-source researchers and volenteers`"""
 
-API_KEY = os.getenv('API_KEY')
-bot = telebot.TeleBot(API_KEY)
+
 
 @bot.message_handler(commands=["start"])
 def greet(message):
@@ -31,6 +34,10 @@ def test(message):
 def greet(message):
     bot.reply_to(message, "Hey there!")
 
-
+# @bot.message_handler(commands=['name'])
+# def ask_name(**kwargs):
+#     bot.send_message(message.chat.id, ['user_id'],
+#                          text='Tell me your name, please :D')
+#     bot.state_manager.set_state(kwargs['user_id'], 'telling_name')
 
 bot.infinity_polling()
