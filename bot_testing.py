@@ -1,12 +1,15 @@
 import os
+from matplotlib import ticker
+import telegram
+import pandas_datareader as web
+
+from turtle import update
 from urllib.request import Request
 from dotenv import load_dotenv
-from sklearn import discriminant_analysis
 from sqlalchemy import true
-from telegram import Bot, Location,Update
+from telegram import Bot,Update
 from telegram.ext import Updater,CommandHandler
 from telegram.utils.request import Request
-from tzlocal import get_localzone_name
 from zmq import CONNECT_TIMEOUT
 from datetime import datetime
 
@@ -14,12 +17,44 @@ from datetime import datetime
 load_dotenv()
 pwd=os.getenv("API_KEY")
 
+def start(update,context):
+    update.message.reply_text("Hello World!")
+
+def Help(update,context):
+    update.message.reply_text("""
+    The following commands are available:
+
+    /start - Start the bot
+    /help - Get this help message
+    /gettime - Get the current date and time
+    /contact - Get the contact details of the bot
+    /videos - Fetch recent videos from YT and FB
+    """)
+
 def get_time(update,context):
-    print(update.message.text)
     now=datetime.now()
     dt_string=now.strftime("%d/%m/%Y %H:%M:%S")
     update.message.reply_text(f"Current Time is : {dt_string}")
 
+def contact(update,context):
+    update.message.reply_text("""
+    Contact Details:
+    Name: Raihan Munim
+    Email: raihan.srizon@gmail.com
+    """)
+
+def videos(update,context):
+    update.message.reply_text("""
+    `Videos:
+    1. https://www.youtube.com/watch?v=vZhF2QHl0-8
+    2. https://www.facebook.com/watch?v=9-Wq6mq7-Uo`
+    """)
+
+def stock(update, context):
+    ticker = context.args[0]
+
+def handle_message(update,context):
+    update.message.reply_text(f"You said {update.message.text}")
 
 def main():
     req=Request(connect_timeout=0.5)
@@ -27,14 +62,19 @@ def main():
     updater=Updater(bot=my_bot,use_context=True)
     dp=updater.dispatcher
 
-    # Get current date and time
-    cmd=[("gettime","Get the current date time in string format")]
-
+    # Display help in menu
+    cmd=[("help","Get this help message")]
     my_bot.set_my_commands(cmd)
-    dp.add_handler(CommandHandler("gettime",get_time))
     
 
+    dp.add_handler(telegram.ext.CommandHandler("start", start))
+    dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
+    dp.add_handler(telegram.ext.CommandHandler("contact", contact))
+    dp.add_handler(telegram.ext.CommandHandler("videos", videos))
+    dp.add_handler(telegram.ext.CommandHandler("help", Help))
 
+    dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
+    
     updater.start_polling()
     updater.idle()
 
