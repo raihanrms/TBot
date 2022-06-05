@@ -29,6 +29,10 @@ def Help(update,context):
     /gettime - Get the current date and time
     /contact - Get the contact details of the bot
     /videos - Fetch recent videos from YT and FB
+    /stock - Get the current price of a stock from Yahoo Finance
+    
+    TO DO:
+    /sendCurrentLocation - Send your current location to the bot
     """)
 
 def get_time(update,context):
@@ -52,6 +56,9 @@ def videos(update,context):
 
 def stock(update, context):
     ticker = context.args[0]
+    data = web.DataReader(ticker, 'yahoo')
+    price = data.iloc[-1]['Close']
+    update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
 
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
@@ -71,6 +78,7 @@ def main():
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
     dp.add_handler(telegram.ext.CommandHandler("contact", contact))
     dp.add_handler(telegram.ext.CommandHandler("videos", videos))
+    dp.add_handler(telegram.ext.CommandHandler("stock", stock))
     dp.add_handler(telegram.ext.CommandHandler("help", Help))
 
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
