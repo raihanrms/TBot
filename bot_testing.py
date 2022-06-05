@@ -33,6 +33,8 @@ def Help(update,context):
     
     TO DO:
     /sendCurrentLocation - Send your current location to the bot
+    /settings - Get the settings of the bot
+    /calulator - Get the calculator of the bot
     """)
 
 def get_time(update,context):
@@ -62,6 +64,9 @@ def stock(update, context):
 
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
+
+def get_timezone():
+    return "Asia/Dhaka"
 
 def main():
     req=Request(connect_timeout=0.5)
