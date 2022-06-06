@@ -62,11 +62,17 @@ def stock(update, context):
     price = data.iloc[-1]['Close']
     update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
 
+def get_timezone():
+    print("Feature would be added soon!")
+
+def settings():
+    print("Feature would be added soon!")
+
+def calculator():
+    print("The calculator feature would be added soon!")
+
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
-
-def get_timezone():
-    return "Asia/Dhaka"
 
 def main():
     req=Request(connect_timeout=0.5)
@@ -85,6 +91,11 @@ def main():
     dp.add_handler(telegram.ext.CommandHandler("videos", videos))
     dp.add_handler(telegram.ext.CommandHandler("stock", stock))
     dp.add_handler(telegram.ext.CommandHandler("help", Help))
+
+    # fetaures to be added soon
+    dp.add_handler(telegram.ext.CommandHandler("settings", settings))
+    dp.add_handler(telegram.ext.CommandHandler("calculator", calculator))
+    dp.add_handler(telegram.ext.CommandHandler("gettimezone", get_timezone))
 
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
     
