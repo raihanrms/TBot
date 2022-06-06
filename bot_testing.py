@@ -1,4 +1,5 @@
 import os
+from urllib import response
 from matplotlib import ticker
 import telegram
 import pandas_datareader as web
@@ -32,9 +33,9 @@ def Help(update,context):
     /stock - Get the current price of a stock from Yahoo Finance
     
     TO DO:
-    /sendCurrentLocation - Send your current location to the bot
+    /get_timezone - Send your current location to the bot
     /settings - Get the settings of the bot
-    /calulator - Get the calculator of the bot
+    /calc - Get the calculator of the bot
     """)
 
 def get_time(update,context):
@@ -62,14 +63,20 @@ def stock(update, context):
     price = data.iloc[-1]['Close']
     update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
 
-def get_timezone():
-    print("Feature would be added soon!")
+def get_timezone(update,context):
+    update.message.reply_text("""
+    This is getting implemented as we speak!
+    """)
 
-def settings():
-    print("Feature would be added soon!")
+def settings(update,context):
+    update.message.reply_text("""
+    This is getting implemented as we speak!
+    """)
 
-def calculator():
-    print("The calculator feature would be added soon!")
+def calc(update,context):
+    update.message.reply_text("""
+    This is getting implemented as we speak!
+    """)
 
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
@@ -94,8 +101,8 @@ def main():
 
     # fetaures to be added soon
     dp.add_handler(telegram.ext.CommandHandler("settings", settings))
-    dp.add_handler(telegram.ext.CommandHandler("calculator", calculator))
-    dp.add_handler(telegram.ext.CommandHandler("gettimezone", get_timezone))
+    dp.add_handler(telegram.ext.CommandHandler("calc", calc))
+    dp.add_handler(telegram.ext.CommandHandler("get_timezone", get_timezone))
 
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
     
