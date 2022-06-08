@@ -52,9 +52,7 @@ def contact(update,context):
 
 def videos(update,context):
     update.message.reply_text("""
-    `Videos:
-    1. https://www.youtube.com/watch?v=vZhF2QHl0-8
-    2. https://www.facebook.com/watch?v=9-Wq6mq7-Uo`
+    `Videos: They will be fetched soon`
     """)
 
 def stock(update, context):
