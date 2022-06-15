@@ -26,16 +26,18 @@ def Help(update,context):
     The following commands are available:
 
     /start - Start the bot
-    /help - Get this help message
-    /gettime - Get the current date and time
-    /contact - Get the contact details of the bot
-    /videos - Fetch recent videos from YT and FB
-    /stock - Get the current price of a stock from Yahoo Finance
+    /help - Help menu
+    /gettime - Current date and time
+    /contact - Contact details of the bot
+    /videos - Fetch YT-FB videos
+    /stock - Stock from Yahoo Finance
     
     TO DO:
-    /get_timezone - Send your current location to the bot
-    /settings - Get the settings of the bot
-    /calc - Get the calculator of the bot
+    /get_timezone - Recieve location
+    /settings - Custom Settings
+    /calc - Calculate some stuff
+    /translate - Bangla to English
+    /notf - Read notifications.
     """)
 
 def get_time(update,context):
@@ -46,8 +48,8 @@ def get_time(update,context):
 def contact(update,context):
     update.message.reply_text("""
     Contact Details:
-    Name: Raihan Munim
-    Email: raihan.srizon@gmail.com
+    Name: N/A
+    Email: N/A
     """)
 
 def videos(update,context):
@@ -76,11 +78,21 @@ def calc(update,context):
     This is getting implemented as we speak!
     """)
 
+def translate(update,context):
+    update.message.reply_text("""
+    This will be difficult to implement!
+    """)
+
+def notf(update,context):
+    update.message.reply_text("""
+    This is read the notifications from phone!
+    """)
+
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
 
 def main():
-    req=Request(connect_timeout=0.5)
+    req=Request(connect_timeout=1.0)
     my_bot=Bot(token=pwd,request=req)
     updater=Updater(bot=my_bot,use_context=True)
     dp=updater.dispatcher
@@ -100,6 +112,8 @@ def main():
     dp.add_handler(telegram.ext.CommandHandler("settings", settings))
     dp.add_handler(telegram.ext.CommandHandler("calc", calc))
     dp.add_handler(telegram.ext.CommandHandler("get_timezone", get_timezone))
+    dp.add_handler(telegram.ext.CommandHandler("translate", translate))
+    dp.add_handler(telegram.ext.CommandHandler("notf", notf))
 
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
 
