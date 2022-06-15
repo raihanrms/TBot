@@ -1,4 +1,5 @@
 .env
+__pycache__
 Testing-bot.py
 Testing_buttons.py
 lang_dict.py
