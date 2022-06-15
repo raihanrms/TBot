@@ -89,7 +89,6 @@ def main():
     cmd=[("help","Get this help message")]
     my_bot.set_my_commands(cmd)
     
-
     dp.add_handler(telegram.ext.CommandHandler("start", start))
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
     dp.add_handler(telegram.ext.CommandHandler("contact", contact))
@@ -103,7 +102,7 @@ def main():
     dp.add_handler(telegram.ext.CommandHandler("get_timezone", get_timezone))
 
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
-    
+
     updater.start_polling()
     updater.idle()
 
