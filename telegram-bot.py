@@ -1,3 +1,4 @@
+from logging import Filter
 import os
 from urllib import response
 from matplotlib import ticker
@@ -8,11 +9,12 @@ from turtle import update
 from urllib.request import Request
 from dotenv import load_dotenv
 from sqlalchemy import true
-from telegram import Bot,Update
-from telegram.ext import Updater,CommandHandler
+from telegram import Bot, Location,Update
+from telegram.ext import Updater,CommandHandler,CallbackContext
 from telegram.utils.request import Request
 from zmq import CONNECT_TIMEOUT
 from datetime import datetime
+
 
 # accessing the bot api token from the .env file
 load_dotenv()
@@ -63,11 +65,10 @@ def stock(update, context):
     price = data.iloc[-1]['Close']
     update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
 
-def get_timezone(update,context):
-    update.message.reply_text("""
-    This is getting implemented as we speak!
-    """)
-
+def get_timezone(update: Update, context: CallbackContext):
+    current_postion = (update.message.location.latitude, update.message.location.longitude)
+    update.message.reply_text(current_postion)
+    
 def settings(update,context):
     update.message.reply_text("""
     This is getting implemented as we speak!
@@ -111,6 +112,7 @@ def main():
     # fetaures to be added soon
     dp.add_handler(telegram.ext.CommandHandler("settings", settings))
     dp.add_handler(telegram.ext.CommandHandler("calc", calc))
+    # dp.add_handler(telegram.ext.CommandHandler(Filter.location, Location))
     dp.add_handler(telegram.ext.CommandHandler("get_timezone", get_timezone))
     dp.add_handler(telegram.ext.CommandHandler("translate", translate))
     dp.add_handler(telegram.ext.CommandHandler("notf", notf))
