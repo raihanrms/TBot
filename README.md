@@ -21,3 +21,7 @@
 | /calculator | Calculator |
 | /translate | Translate text |
 | /notf | Notifications |
+
+<!-- List all the packages used -->
+[]: # Packages used: Packages
+[]: # Path: requirements.txt
