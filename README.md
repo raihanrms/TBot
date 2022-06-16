@@ -12,9 +12,9 @@
 `/stock - Stock from Yahoo Finance`  
 
 #### Features that are currently under development:
-/get_timezone - `Recieve location`  
-/settings - `Custom Settings`  
-/calc - `Calculate some stuff`  
-/translate - `Bangla to English`  
-/notf - `Read notifications.`  
+*/get_timezone* - `Recieve location`  
+*/settings*     - `Custom Settings`  
+*/calc*         - `Calculate some stuff`  
+*/translate*    - `Bangla to English`  
+*/notf*         - `Read notifications.`  
 
