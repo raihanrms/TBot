@@ -4,12 +4,16 @@
 `Ability to choose language between English and Bangla`
 
 #### The following commands are available:
-`/start - Start the bot`  
-`/help - Help menu`  
-`/gettime - Current date and time`  
-`/contact - Contact details of the bot`  
-`/videos - Fetch YT-FB videos`  
-`/stock - Stock from Yahoo Finance`  
+| Command | Description |
+|:-------:|:-----------:|
+| /start | Start the bot |
+| /help | Help menu |
+| /gettime | Current date and time |
+| /contact | Contact details of the bot |
+| /video | Fetch YT-FB videos |
+| /stock | Stock from Yahoo Finance |
+
+
 
 #### Features that are currently under development:
 */get_timezone* - `Recieve location`  
