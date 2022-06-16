@@ -1,24 +1,12 @@
-from logging import Filter
-import os
-from urllib import response
-from matplotlib import ticker
-import telegram
-import pandas_datareader as web
-
-from turtle import update
-from urllib.request import Request
-from dotenv import load_dotenv
-from sqlalchemy import true
-from telegram import Bot, Location,Update
-from telegram.ext import Updater,CommandHandler,CallbackContext
-from telegram.utils.request import Request
-from zmq import CONNECT_TIMEOUT
-from datetime import datetime
-
+# Importing all the packages from a separate file
+from Packages import *
 
 # accessing the bot api token from the .env file
 load_dotenv()
 pwd=os.getenv("API_KEY")
+
+# enabling logging
+
 
 def start(update,context):
     update.message.reply_text("Hello World!")
