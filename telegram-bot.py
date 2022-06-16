@@ -1,4 +1,5 @@
 # Importing all the packages from a separate file
+import logging
 from Packages import *
 
 # accessing the bot api token from the .env file
@@ -6,10 +7,34 @@ load_dotenv()
 pwd=os.getenv("API_KEY")
 
 # enabling logging
+# logging.basicConfig(
+#     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#     level=logging.INFO)
 
+# logger = logging.getLogger(__name__)
+
+# Global Variables
+LANG = "EN"
+SET_LANG = range(8)
 
 def start(update,context):
-    update.message.reply_text("Hello World!")
+    """Start function. Displayed whenever the /start command is called.
+    This function sets the language of the bot."""
+
+    # Create the buttons for language selection
+    keyboard = [['Bengali', 'English']]
+
+    # Create initial message
+    message = "Hey, I'm RMS-Bot!  \n" \
+              "\n""আমি আরএমএস-বট! \n" \
+              "\n""Please select a language \n" \
+              "\n""অনুগ্রহ করে ভাষা নির্বাচন করুন। \n" \
+
+    reply_markup = ReplyKeyboardMarkup(keyboard, 
+                                       one_time_keyboard=True,
+                                       resize_keyboard=True)
+    update.message.reply_text(message, reply_markup=reply_markup)
+    return Help
 
 def Help(update,context):
     update.message.reply_text("""
@@ -81,13 +106,13 @@ def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
 
 def main():
-    req=Request(connect_timeout=1.0)
+    req=Request(connect_timeout=0.5)
     my_bot=Bot(token=pwd,request=req)
     updater=Updater(bot=my_bot,use_context=True)
     dp=updater.dispatcher
 
     # Display help in menu
-    cmd=[("help","Get this help message")]
+    cmd=[("help","Get all the commands")]
     my_bot.set_my_commands(cmd)
     
     dp.add_handler(telegram.ext.CommandHandler("start", start))
