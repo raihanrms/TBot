@@ -13,7 +13,7 @@
 
 #### Features that are currently under development:
 */get_timezone* - `Recieve location`  
-*/settings*     - `Custom Settings`  
+*/settings*\t\t - `Custom Settings`  
 */calc*         - `Calculate some stuff`  
 */translate*    - `Bangla to English`  
 */notf*         - `Read notifications.`  
