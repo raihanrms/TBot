@@ -21,7 +21,3 @@
 | /calculator | Calculator |
 | /translate | Translate text |
 | /notf | Notifications |
-
-<!-- List all the packages used -->
-[]: # Language: markdown
-[]: # Path: README.md
