@@ -21,3 +21,4 @@
 | /calculator | Calculator |
 | /translate | Translate text |
 | /notf | Notifications |
+

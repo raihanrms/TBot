@@ -29,8 +29,8 @@ def start(update: Update, context: CallbackContext):
 
     keyboard2 = [
         [   
-            InlineKeyboardButton("Start", callback_data='start'),
-            InlineKeyboardButton("Help", callback_data=str("/help")),
+            InlineKeyboardButton("Start", callback_data="3"),
+            InlineKeyboardButton("Help", callback_data=str("4")),
             InlineKeyboardButton("Get Time", callback_data="5")
         ],[
             InlineKeyboardButton("Contact", callback_data="6"),
@@ -40,6 +40,24 @@ def start(update: Update, context: CallbackContext):
 
     reply_markup = InlineKeyboardMarkup(keyboard2)
     update.message.reply_text("List of Commands:", reply_markup=reply_markup)
+
+def inlinebutton(update: Update, context: CallbackContext):
+    query = update.callback_query
+    if query.data == "3":
+        query.edit_message_text(text="You selected Start")
+    elif query.data == "4":
+        query.edit_message_text(text="You selected Help")
+    elif query.data == "5":
+        query.edit_message_text(text="You selected Get Time")
+    elif query.data == "6":
+        query.edit_message_text(text="You selected Contact")
+    elif query.data == "7":
+        query.edit_message_text(text="You selected Videos")
+    elif query.data == "8":
+        query.edit_message_text(text="You selected Stock")
+
+    # query.edit_message_text(text=f"You selected: {query.data}")
+
 
 def Help(update,context):
     update.message.reply_text("""
@@ -119,7 +137,9 @@ def main():
     cmd=[("help","Get this help message")]
     my_bot.set_my_commands(cmd)
     
-    dp.add_handler(telegram.ext.CommandHandler("start", start))
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CallbackQueryHandler(inlinebutton))
+
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
     dp.add_handler(telegram.ext.CommandHandler("contact", contact))
     dp.add_handler(telegram.ext.CommandHandler("videos", videos))
