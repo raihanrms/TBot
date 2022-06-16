@@ -1,7 +1,7 @@
 ## Telegram Bot with Python
 
 ### Language Feature: BN/EN
-`Ability to choose language between English and Bangla`
+*Ability to choose language between English and Bangla*
 
 #### The following commands are available:
 | Command | Description |
@@ -13,12 +13,11 @@
 | /video | Fetch YT-FB videos |
 | /stock | Stock from Yahoo Finance |
 
-
-
 #### Features that are currently under development:
-*/get_timezone* - `Recieve location`  
-*/settings*\t\t - `Custom Settings`  
-*/calc*         - `Calculate some stuff`  
-*/translate*    - `Bangla to English`  
-*/notf*         - `Read notifications.`  
-
+| Feature | Description |
+|-------|-----------|
+| /get_timezone | Get timezone of the user |
+| /settings | Settings menu |
+| /calculator | Calculator |
+| /translate | Translate text |
+| /notf | Notifications |
