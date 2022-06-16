@@ -5,7 +5,7 @@
 
 #### The following commands are available:
 | Command | Description |
-|:-------:|:-----------:|
+|:-------|-----------|
 | /start | Start the bot |
 | /help | Help menu |
 | /gettime | Current date and time |
@@ -15,7 +15,7 @@
 
 #### Features that are currently under development:
 | Feature | Description |
-|-------|-----------|
+|:-------:|-----------|
 | /get_timezone | Get timezone of the user |
 | /settings | Settings menu |
 | /calculator | Calculator |
