@@ -6,40 +6,31 @@ from Packages import *
 load_dotenv()
 pwd=os.getenv("API_KEY")
 
-# enabling logging
-# logging.basicConfig(
-#     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-#     level=logging.INFO)
-
-# logger = logging.getLogger(__name__)
-
 # Global Variables
 LANG = "EN"
 SET_LANG = range(8)
 
 def start(update,context):
     """Start function. Displayed whenever the /start command is called.
-    This function sets the language of the bot."""
+       This function sets the language of the bot."""
+    update.message.reply_text("""
+    Hey, I'm RMS-Bot!  \nআমি আরএমএস-বট! \nPlease select a language \nঅনুগ্রহ করে ভাষা নির্বাচন করুন। \n
+    """)
 
     # Create the buttons for language selection
-    keyboard = [['Bengali', 'English']]
+    keyboard = [
+        [
+            InlineKeyboardButton("বাংলা", callback_data="1"),
+            InlineKeyboardButton("English", callback_data="2")
+        ]]
 
-    # Create initial message
-    message = "Hey, I'm RMS-Bot!  \n" \
-              "\n""আমি আরএমএস-বট! \n" \
-              "\n""Please select a language \n" \
-              "\n""অনুগ্রহ করে ভাষা নির্বাচন করুন। \n" \
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
-    reply_markup = ReplyKeyboardMarkup(keyboard, 
-                                       one_time_keyboard=True,
-                                       resize_keyboard=True)
-    update.message.reply_text(message, reply_markup=reply_markup)
-    return Help
+    update.message.reply_text("Please select your language:", reply_markup=reply_markup)
 
 def Help(update,context):
     update.message.reply_text("""
     The following commands are available:
-
     /start - Start the bot
     /help - Help menu
     /gettime - Current date and time
@@ -69,7 +60,7 @@ def contact(update,context):
 
 def videos(update,context):
     update.message.reply_text("""
-    `Videos: They will be fetched soon`
+    Videos: They will be fetched soon!
     """)
 
 def stock(update, context):
@@ -106,13 +97,13 @@ def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
 
 def main():
-    req=Request(connect_timeout=0.5)
+    req=Request(connect_timeout=1.0)
     my_bot=Bot(token=pwd,request=req)
     updater=Updater(bot=my_bot,use_context=True)
     dp=updater.dispatcher
 
     # Display help in menu
-    cmd=[("help","Get all the commands")]
+    cmd=[("help","Get this help message")]
     my_bot.set_my_commands(cmd)
     
     dp.add_handler(telegram.ext.CommandHandler("start", start))
@@ -129,11 +120,11 @@ def main():
     dp.add_handler(telegram.ext.CommandHandler("get_timezone", get_timezone))
     dp.add_handler(telegram.ext.CommandHandler("translate", translate))
     dp.add_handler(telegram.ext.CommandHandler("notf", notf))
-
+    
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
-
+    
     updater.start_polling()
     updater.idle()
-
+    
 if __name__=="__main__":
     main()

@@ -16,7 +16,10 @@ from telegram.utils.request import Request
 from zmq import CONNECT_TIMEOUT
 from datetime import datetime
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import MessageHandler, MessageHandler
 from telegram.ext import ConversationHandler, CallbackQueryHandler
+from telegram.ext import ContextTypes
+
+# from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
