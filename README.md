@@ -23,5 +23,5 @@
 | /notf | Notifications |
 
 <!-- List all the packages used -->
-[]: # Packages used: Packages
-[]: # Path: requirements.txt
+[X]: # Packages used: Packages
+[X]: # Path: requirements.txt
