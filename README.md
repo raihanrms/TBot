@@ -1,7 +1,7 @@
 ## Telegram Bot with Python
 
 ### Language Feature: BN/EN
-**Ability to choose language between English and Bangla**
+> Ability to choose language between English and Bangla
 
 #### The following commands are available:
 | Command | Description |
