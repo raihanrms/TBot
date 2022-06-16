@@ -18,15 +18,28 @@ def start(update,context):
     """)
 
     # Create the buttons for language selection
-    keyboard = [
+    keyboard1 = [
         [
             InlineKeyboardButton("বাংলা", callback_data="1"),
             InlineKeyboardButton("English", callback_data="2")
         ]]
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
+    reply_markup = InlineKeyboardMarkup(keyboard1)
     update.message.reply_text("Please select your language:", reply_markup=reply_markup)
+
+    keyboard2 = [
+        [   
+            InlineKeyboardButton("Start", callback_data=str(start)),
+            InlineKeyboardButton("Help", callback_data=str("/help")),
+            InlineKeyboardButton("Get Time", callback_data="5")
+        ],[
+            InlineKeyboardButton("Contact", callback_data="6"),
+            InlineKeyboardButton("Videos", callback_data="7"),
+            InlineKeyboardButton("Stock", callback_data="8")
+        ]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard2)
+    update.message.reply_text("List of Commands:", reply_markup=reply_markup)
 
 def Help(update,context):
     update.message.reply_text("""
@@ -125,6 +138,6 @@ def main():
     
     updater.start_polling()
     updater.idle()
-    
+
 if __name__=="__main__":
     main()
