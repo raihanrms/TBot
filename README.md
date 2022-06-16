@@ -23,5 +23,5 @@
 | /notf | Notifications |
 
 <!-- List all the packages used -->
-[X]: # Packages used: Packages
-[X]: # Path: requirements.txt
+[]: # Language: markdown
+[]: # Path: README.md
