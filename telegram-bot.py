@@ -10,7 +10,7 @@ pwd=os.getenv("API_KEY")
 LANG = "EN"
 SET_LANG = range(8)
 
-def start(update,context):
+def start(update: Update, context: CallbackContext):
     """Start function. Displayed whenever the /start command is called.
        This function sets the language of the bot."""
     update.message.reply_text("""
@@ -29,7 +29,7 @@ def start(update,context):
 
     keyboard2 = [
         [   
-            InlineKeyboardButton("Start", callback_data=str(start)),
+            InlineKeyboardButton("Start", callback_data='start'),
             InlineKeyboardButton("Help", callback_data=str("/help")),
             InlineKeyboardButton("Get Time", callback_data="5")
         ],[
