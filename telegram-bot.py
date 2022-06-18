@@ -27,34 +27,20 @@ def start(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard1)
     update.message.reply_text("Please select your language:", reply_markup=reply_markup)
 
-    keyboard2 = [
-        [   
-            InlineKeyboardButton("Start", callback_data="3"),
-            InlineKeyboardButton("Help", callback_data=str("4")),
-            InlineKeyboardButton("Get Time", callback_data="5")
-        ],[
-            InlineKeyboardButton("Contact", callback_data="6"),
-            InlineKeyboardButton("Videos", callback_data="7"),
-            InlineKeyboardButton("Stock", callback_data="8")
-        ]]
-
-    reply_markup = InlineKeyboardMarkup(keyboard2)
-    update.message.reply_text("List of Commands:", reply_markup=reply_markup)
-
-def inlinebutton(update: Update, context: CallbackContext):
-    query = update.callback_query
-    if query.data == "3":
-        query.edit_message_text(text="You selected Start")
-    elif query.data == "4":
-        query.edit_message_text(text="You selected Help")
-    elif query.data == "5":
-        query.edit_message_text(text="You selected Get Time")
-    elif query.data == "6":
-        query.edit_message_text(text="You selected Contact")
-    elif query.data == "7":
-        query.edit_message_text(text="You selected Videos")
-    elif query.data == "8":
-        query.edit_message_text(text="You selected Stock")
+# def inlinebutton(update: Update, context: CallbackContext):
+#     query = update.callback_query
+#     if query.data == "3":
+#         query.edit_message_text(text="You selected Start")
+#     elif query.data == "4":
+#         query.edit_message_text(text="You selected Help")
+#     elif query.data == "5":
+#         query.edit_message_text(text="You selected Get Time")
+#     elif query.data == "6":
+#         query.edit_message_text(text="You selected Contact")
+#     elif query.data == "7":
+#         query.edit_message_text(text="You selected Videos")
+#     elif query.data == "8":
+#         query.edit_message_text(text="You selected Stock")
 
     # query.edit_message_text(text=f"You selected: {query.data}")
 
@@ -76,6 +62,20 @@ def Help(update,context):
     /translate - Bangla to English
     /notf - Read notifications.
     """)
+
+    keyboard2 = [
+    [   
+        InlineKeyboardButton("Start", callback_data="3"),
+        InlineKeyboardButton("Help", callback_data=str("4")),
+        InlineKeyboardButton("Get Time", callback_data="5")
+    ],[
+        InlineKeyboardButton("Contact", callback_data="6"),
+        InlineKeyboardButton("Videos", callback_data="7"),
+        InlineKeyboardButton("Stock", callback_data="8")
+    ]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard2)
+    update.message.reply_text("List of Commands:", reply_markup=reply_markup)
 
 def get_time(update,context):
     now=datetime.now()
@@ -138,7 +138,7 @@ def main():
     my_bot.set_my_commands(cmd)
     
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CallbackQueryHandler(inlinebutton))
+    #dp.add_handler(CallbackQueryHandler(inlinebutton))
 
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
     dp.add_handler(telegram.ext.CommandHandler("contact", contact))
