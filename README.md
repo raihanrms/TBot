@@ -23,5 +23,5 @@
 | /notf | Notifications |
 
 **Working on:**
-> Adding functionality to inline keyboard buttons so the user can interact with the bot.
+> Adding functionality to inline keyboard buttons so the user can interact with the bot.   
 > Buggy buttons needs to be fixed!!!
