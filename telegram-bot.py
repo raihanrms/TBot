@@ -14,7 +14,7 @@ def start(update: Update, context: CallbackContext):
     """Start function. Displayed whenever the /start command is called.
        This function sets the language of the bot."""
     update.message.reply_text("""
-    Hey, I'm RMS-Bot!  \nআমি আরএমএস-বট! \nPlease select a language \nঅনুগ্রহ করে ভাষা নির্বাচন করুন। \n
+    Hey, I'm RMS-Bot! \nPlease select a language \nআমি আরএমএস-বট! \nঅনুগ্রহ করে ভাষা নির্বাচন করুন। \n
     """)
 
     # Create the buttons for language selection
@@ -26,6 +26,7 @@ def start(update: Update, context: CallbackContext):
 
     reply_markup = InlineKeyboardMarkup(keyboard1)
     update.message.reply_text("Please select your language:", reply_markup=reply_markup)
+    
 
 # def inlinebutton(update: Update, context: CallbackContext):
 #     query = update.callback_query
