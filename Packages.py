@@ -15,6 +15,7 @@ from telegram.ext import Updater,CommandHandler,CallbackContext
 from telegram.utils.request import Request
 from zmq import CONNECT_TIMEOUT
 from datetime import datetime
+from pyrogram import Client, filters
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove

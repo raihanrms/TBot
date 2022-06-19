@@ -28,22 +28,15 @@ def start(update: Update, context: CallbackContext):
     update.message.reply_text("Please select your language:", reply_markup=reply_markup)
     
 
-# def inlinebutton(update: Update, context: CallbackContext):
+# connect buttons with the fuctions
+# def callback(update,context):
 #     query = update.callback_query
-#     if query.data == "3":
-#         query.edit_message_text(text="You selected Start")
-#     elif query.data == "4":
-#         query.edit_message_text(text="You selected Help")
-#     elif query.data == "5":
-#         query.edit_message_text(text="You selected Get Time")
-#     elif query.data == "6":
-#         query.edit_message_text(text="You selected Contact")
-#     elif query.data == "7":
-#         query.edit_message_text(text="You selected Videos")
-#     elif query.data == "8":
-#         query.edit_message_text(text="You selected Stock")
-
-    # query.edit_message_text(text=f"You selected: {query.data}")
+#     if query.data == "1":
+#         LANG = "BN"
+#         query.edit_message_text(text="আপনার ভাষা নির্বাচন করা হয়েছে।")
+#     elif query.data == "2":
+#         LANG = "EN"
+#         query.edit_message_text(text="Your language has been selected.")
 
 
 def Help(update,context):
