@@ -17,8 +17,8 @@ from zmq import CONNECT_TIMEOUT
 from datetime import datetime
 from pyrogram import Client, filters
 
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+# from aiogram import Bot, Dispatcher, executor, types
+# from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove

@@ -13,8 +13,8 @@ SET_LANG = range(8)
 def start(update: Update, context: CallbackContext):
     """Start function. Displayed whenever the /start command is called.
        This function sets the language of the bot."""
-    update.message.reply_text("""
-    Hey, I'm RMS-Bot! \nPlease select a language \nআমি আরএমএস-বট! \nঅনুগ্রহ করে ভাষা নির্বাচন করুন। \n
+    update.message.reply_text(f"""
+    Hey, I'm RMS-Bot! \nআমি আরএমএস-বট!\n
     """)
 
     # Create the buttons for language selection
@@ -25,7 +25,8 @@ def start(update: Update, context: CallbackContext):
         ]]
 
     reply_markup = InlineKeyboardMarkup(keyboard1)
-    update.message.reply_text("Please select your language:", reply_markup=reply_markup)
+    update.message.reply_text(f"""Please select your language:, 
+    \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=reply_markup)
     
 
 # connect buttons with the fuctions
