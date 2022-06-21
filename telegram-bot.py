@@ -1,5 +1,8 @@
 # Importing all the packages from a separate file
 import logging
+from click import command
+
+from telegram import Audio, KeyboardButton
 from Packages import *
 
 # accessing the bot api token from the .env file
@@ -25,7 +28,7 @@ def start(update: Update, context: CallbackContext):
         ]]
 
     reply_markup = InlineKeyboardMarkup(keyboard1)
-    update.message.reply_text(f"""Please select your language:, 
+    update.message.reply_text(f"""Please select your language:
     \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=reply_markup)
     
 
@@ -41,22 +44,22 @@ def start(update: Update, context: CallbackContext):
 
 
 def Help(update,context):
-    update.message.reply_text("""
-    The following commands are available:
-    /start - Start the bot
-    /help - Help menu
-    /gettime - Current date and time
-    /contact - Contact details of the bot
-    /videos - Fetch YT-FB videos
-    /stock - Stock from Yahoo Finance
+    # update.message.reply_text("""
+    # The following commands are available:""")
+    # /start - Start the bot
+    # /help - Help menu
+    # /gettime - Current date and time
+    # /contact - Contact details of the bot
+    # /videos - Fetch YT-FB videos
+    # /stock - Stock from Yahoo Finance
     
-    TO DO:
-    /get_timezone - Recieve location
-    /settings - Custom Settings
-    /calc - Calculate some stuff
-    /translate - Bangla to English
-    /notf - Read notifications.
-    """)
+    # TO DO:
+    # /get_timezone - Recieve location
+    # /settings - Custom Settings
+    # /calc - Calculate some stuff
+    # /translate - Bangla to English
+    # /notf - Read notifications.
+    # """)
 
     keyboard2 = [
     [   
@@ -77,6 +80,10 @@ def get_time(update,context):
     dt_string=now.strftime("%d/%m/%Y %H:%M:%S")
     update.message.reply_text(f"Current Time is : {dt_string}")
 
+markup = ReplyKeyboardMarkup(keyboard=[['Contact', KeyboardButton(text='Logo')],
+        ["File", Audio]])
+        if command == '/contact':
+            
 def contact(update,context):
     update.message.reply_text("""
     Contact Details:
