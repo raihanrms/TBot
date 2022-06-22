@@ -23,6 +23,13 @@ async def random_value(call: types.CallbackQuery):
         await call.message.answer(randint(1, 100))
     await call.answer()
 
+@dp.callback_query_handler(text=["3", "4", "5", "6", "7", "8"])
+async def button(call: types.CallbackQuery):
+    if call.data == "3":
+        await start(call.message, call.context)
+    if call.data == "4":
+        await Help(call.message, call.context)
+
 def start(update: Update, context: CallbackContext):
     """Start function. Displayed whenever the /start command is called.
        This function sets the language of the bot."""
