@@ -1,8 +1,5 @@
 # Importing all the packages from a separate file
 import logging
-from click import command
-
-from telegram import Audio, KeyboardButton
 from Packages import *
 
 # accessing the bot api token from the .env file
@@ -12,6 +9,19 @@ pwd=os.getenv("API_KEY")
 # Global Variables
 LANG = "EN"
 SET_LANG = range(8)
+
+from Testing_buttons import *
+@dp.message_handler(commands=['start', 'help'])
+async def welcome(message: types.Message):
+    await message.reply("Hello! Im Raihan, I'm just testing the bot!", reply_markup=keyboard1)
+
+@dp.callback_query_handler(text=["randomvalue_of10", "randomvalue_of100"])
+async def random_value(call: types.CallbackQuery):
+    if call.data == "randomvalue_of10":
+        await call.message.answer(randint(1, 10))
+    if call.data == "randomvalue_of100":
+        await call.message.answer(randint(1, 100))
+    await call.answer()
 
 def start(update: Update, context: CallbackContext):
     """Start function. Displayed whenever the /start command is called.
@@ -44,7 +54,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def Help(update,context):
-    # update.message.reply_text("""
+    #update.message.reply_text("""
     # The following commands are available:""")
     # /start - Start the bot
     # /help - Help menu
@@ -80,10 +90,6 @@ def get_time(update,context):
     dt_string=now.strftime("%d/%m/%Y %H:%M:%S")
     update.message.reply_text(f"Current Time is : {dt_string}")
 
-markup = ReplyKeyboardMarkup(keyboard=[['Contact', KeyboardButton(text='Logo')],
-        ["File", Audio]])
-        if command == '/contact':
-            
 def contact(update,context):
     update.message.reply_text("""
     Contact Details:
