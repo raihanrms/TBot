@@ -24,9 +24,9 @@ def start(update: Update, context: CallbackContext):
             InlineKeyboardButton("English", callback_data="2")
         ]]
 
-    reply_markup = InlineKeyboardMarkup(keyboard1)
+    kbd1 = InlineKeyboardMarkup(keyboard1)
     update.message.reply_text(f"""Please select your language:
-    \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=reply_markup)
+    \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=kbd1)
     
 
 # connect buttons with the fuctions
@@ -50,7 +50,7 @@ def Help(update,context):
     # /stock - Stock from Yahoo Finance
     
     # TO DO:
-    # /get_timezone - Recieve location
+    # /getLoc - Recieve location
     # /settings - Custom Settings
     # /calc - Calculate some stuff
     # /translate - Bangla to English
@@ -59,13 +59,13 @@ def Help(update,context):
 
     keyboard2 = [
         [   
-            InlineKeyboardButton("Start", callback_data=""),
-            InlineKeyboardButton("Help", callback_data=str("4")),
-            InlineKeyboardButton("Get Time", callback_data="5")
+            InlineKeyboardButton("Start", callback_data="start"),
+            InlineKeyboardButton("Help", callback_data=str("help")),
+            InlineKeyboardButton("Get Time", callback_data="gettime"),
         ],[
-            InlineKeyboardButton("Contact", callback_data="6"),
-            InlineKeyboardButton("Videos", callback_data="7"),
-            InlineKeyboardButton("Stock", callback_data="8")
+            InlineKeyboardButton("Contact", callback_data="contact"),
+            InlineKeyboardButton("Videos", callback_data="videos"),
+            InlineKeyboardButton("Stock", callback_data="stock"),
         ]]
 
     reply_markup = InlineKeyboardMarkup(keyboard2)
@@ -94,9 +94,9 @@ def stock(update, context):
     price = data.iloc[-1]['Close']
     update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
 
-def get_timezone(update: Update, context: CallbackContext):
-    current_postion = (update.message.location.latitude, update.message.location.longitude)
-    update.message.reply_text(current_postion)
+# def getLoc(update: Update, context: CallbackContext):
+#     current_postion = (update.message.location.latitude, update.message.location.longitude)
+#     update.message.reply_text(current_postion)
     
 def settings(update,context):
     update.message.reply_text("""
@@ -121,6 +121,12 @@ def notf(update,context):
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
 
+def echo(update: Update, context: CallbackContext):
+    """Echo the user message."""
+    update.message.reply_text("You just clicked on '%d'" % update.message.text)
+
+    pass
+
 def main():
     req=Request(connect_timeout=1.0)
     my_bot=Bot(token=pwd,request=req)
@@ -134,17 +140,18 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     #dp.add_handler(CallbackQueryHandler(inlinebutton))
 
+    dp.add_handler(telegram.ext.CommandHandler("help", Help))
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
     dp.add_handler(telegram.ext.CommandHandler("contact", contact))
     dp.add_handler(telegram.ext.CommandHandler("videos", videos))
     dp.add_handler(telegram.ext.CommandHandler("stock", stock))
-    dp.add_handler(telegram.ext.CommandHandler("help", Help))
+    
 
     # fetaures to be added soon
     dp.add_handler(telegram.ext.CommandHandler("settings", settings))
     dp.add_handler(telegram.ext.CommandHandler("calc", calc))
-    # dp.add_handler(telegram.ext.CommandHandler(Filter.location, Location))
-    dp.add_handler(telegram.ext.CommandHandler("get_timezone", get_timezone))
+    #dp.add_handler(telegram.ext.CommandHandler(Filter.location, Location))
+    # dp.add_handler(telegram.ext.CommandHandler("getLoc", getLoc))
     dp.add_handler(telegram.ext.CommandHandler("translate", translate))
     dp.add_handler(telegram.ext.CommandHandler("notf", notf))
     
