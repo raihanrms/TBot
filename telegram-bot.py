@@ -10,26 +10,6 @@ pwd=os.getenv("API_KEY")
 LANG = "EN"
 SET_LANG = range(8)
 
-from Testing_buttons import *
-@dp.message_handler(commands=['start', 'help'])
-async def welcome(message: types.Message):
-    await message.reply("Hello! Im Raihan, I'm just testing the bot!", reply_markup=keyboard1)
-
-@dp.callback_query_handler(text=["randomvalue_of10", "randomvalue_of100"])
-async def random_value(call: types.CallbackQuery):
-    if call.data == "randomvalue_of10":
-        await call.message.answer(randint(1, 10))
-    if call.data == "randomvalue_of100":
-        await call.message.answer(randint(1, 100))
-    await call.answer()
-
-@dp.callback_query_handler(text=["3", "4", "5", "6", "7", "8"])
-async def button(call: types.CallbackQuery):
-    if call.data == "3":
-        await start(call.message, call.context)
-    if call.data == "4":
-        await Help(call.message, call.context)
-
 def start(update: Update, context: CallbackContext):
     """Start function. Displayed whenever the /start command is called.
        This function sets the language of the bot."""
@@ -59,7 +39,6 @@ def start(update: Update, context: CallbackContext):
 #         LANG = "EN"
 #         query.edit_message_text(text="Your language has been selected.")
 
-
 def Help(update,context):
     #update.message.reply_text("""
     # The following commands are available:""")
@@ -79,15 +58,15 @@ def Help(update,context):
     # """)
 
     keyboard2 = [
-    [   
-        InlineKeyboardButton("Start", callback_data="3"),
-        InlineKeyboardButton("Help", callback_data=str("4")),
-        InlineKeyboardButton("Get Time", callback_data="5")
-    ],[
-        InlineKeyboardButton("Contact", callback_data="6"),
-        InlineKeyboardButton("Videos", callback_data="7"),
-        InlineKeyboardButton("Stock", callback_data="8")
-    ]]
+        [   
+            InlineKeyboardButton("Start", callback_data=""),
+            InlineKeyboardButton("Help", callback_data=str("4")),
+            InlineKeyboardButton("Get Time", callback_data="5")
+        ],[
+            InlineKeyboardButton("Contact", callback_data="6"),
+            InlineKeyboardButton("Videos", callback_data="7"),
+            InlineKeyboardButton("Stock", callback_data="8")
+        ]]
 
     reply_markup = InlineKeyboardMarkup(keyboard2)
     update.message.reply_text("List of Commands:", reply_markup=reply_markup)
