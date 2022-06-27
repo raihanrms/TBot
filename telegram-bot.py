@@ -18,26 +18,16 @@ def start(update: Update, context: CallbackContext):
     """)
 
     # Create the buttons for language selection
-    keyboard1 = [
-        [
-            InlineKeyboardButton("বাংলা", callback_data="1"),
-            InlineKeyboardButton("English", callback_data="2")
-        ]]
+    # keyboard1 = [
+    #     [
+    #         InlineKeyboardButton("বাংলা", callback_data="1"),
+    #         InlineKeyboardButton("English", callback_data="2")
+    #     ]]
 
-    kbd1 = InlineKeyboardMarkup(keyboard1)
-    update.message.reply_text(f"""Please select your language:
-    \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=kbd1)
+    # kbd1 = InlineKeyboardMarkup(keyboard1)
+    # update.message.reply_text(f"""Please select your language:
+    # \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=kbd1)
     
-
-# connect buttons with the fuctions
-# def callback(update,context):
-#     query = update.callback_query
-#     if query.data == "1":
-#         LANG = "BN"
-#         query.edit_message_text(text="আপনার ভাষা নির্বাচন করা হয়েছে।")
-#     elif query.data == "2":
-#         LANG = "EN"
-#         query.edit_message_text(text="Your language has been selected.")
 
 def Help(update,context):
     #update.message.reply_text("""
@@ -61,11 +51,7 @@ def Help(update,context):
         [   
             InlineKeyboardButton("Start", callback_data="start"),
             InlineKeyboardButton("Help", callback_data=str("help")),
-            InlineKeyboardButton("Get Time", callback_data="gettime"),
-        ],[
-            InlineKeyboardButton("Contact", callback_data="contact"),
-            InlineKeyboardButton("Videos", callback_data="videos"),
-            InlineKeyboardButton("Stock", callback_data="stock"),
+            InlineKeyboardButton("Get Time", callback_data="get_time"),
         ]]
 
     reply_markup = InlineKeyboardMarkup(keyboard2)
@@ -75,50 +61,50 @@ def get_time(update,context):
     now=datetime.now()
     dt_string=now.strftime("%d/%m/%Y %H:%M:%S")
     update.message.reply_text(f"Current Time is : {dt_string}")
-    return contact
+#     return contact
 
-def contact(update,context):
-    update.message.reply_text("""
-    Contact Details:
-    Name: N/A
-    Email: N/A
-    """)
-    return videos
+# def contact(update,context):
+#     update.message.reply_text("""
+#     Contact Details:
+#     Name: N/A
+#     Email: N/A
+#     """)
+#     return videos
 
-def videos(update,context):
-    update.message.reply_text("""
-    Videos: They will be fetched soon!
-    """)
+# def videos(update,context):
+#     update.message.reply_text("""
+#     Videos: They will be fetched soon!
+#     """)
 
-def stock(update, context):
-    ticker = context.args[0]
-    data = web.DataReader(ticker, 'yahoo')
-    price = data.iloc[-1]['Close']
-    update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
+# def stock(update, context):
+#     ticker = context.args[0]
+#     data = web.DataReader(ticker, 'yahoo')
+#     price = data.iloc[-1]['Close']
+#     update.message.reply_text(f"The current price of {ticker} is {price:.2f}$!")
 
 # def getLoc(update: Update, context: CallbackContext):
 #     current_postion = (update.message.location.latitude, update.message.location.longitude)
 #     update.message.reply_text(current_postion)
     
-def settings(update,context):
-    update.message.reply_text("""
-    This is getting implemented as we speak!
-    """)
+# def settings(update,context):
+#     update.message.reply_text("""
+#     This is getting implemented as we speak!
+#     """)
 
-def calc(update,context):
-    update.message.reply_text("""
-    This is getting implemented as we speak!
-    """)
+# def calc(update,context):
+#     update.message.reply_text("""
+#     This is getting implemented as we speak!
+#     """)
 
-def translate(update,context):
-    update.message.reply_text("""
-    This will be difficult to implement!
-    """)
+# def translate(update,context):
+#     update.message.reply_text("""
+#     This will be difficult to implement!
+#     """)
 
-def notf(update,context):
-    update.message.reply_text("""
-    This is read the notifications from phone!
-    """)
+# def notf(update,context):
+#     update.message.reply_text("""
+#     This is read the notifications from phone!
+#     """)
 
 def handle_message(update,context):
     update.message.reply_text(f"You said {update.message.text}")
@@ -144,18 +130,18 @@ def main():
 
     dp.add_handler(telegram.ext.CommandHandler("help", Help))
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
-    dp.add_handler(telegram.ext.CommandHandler("contact", contact))
-    dp.add_handler(telegram.ext.CommandHandler("videos", videos))
-    dp.add_handler(telegram.ext.CommandHandler("stock", stock))
+    # dp.add_handler(telegram.ext.CommandHandler("contact", contact))
+    # dp.add_handler(telegram.ext.CommandHandler("videos", videos))
+    # dp.add_handler(telegram.ext.CommandHandler("stock", stock))
     
 
     # fetaures to be added soon
-    dp.add_handler(telegram.ext.CommandHandler("settings", settings))
-    dp.add_handler(telegram.ext.CommandHandler("calc", calc))
-    #dp.add_handler(telegram.ext.CommandHandler(Filter.location, Location))
+    # dp.add_handler(telegram.ext.CommandHandler("settings", settings))
+    # dp.add_handler(telegram.ext.CommandHandler("calc", calc))
+    # dp.add_handler(telegram.ext.CommandHandler(Filter.location, Location))
     # dp.add_handler(telegram.ext.CommandHandler("getLoc", getLoc))
-    dp.add_handler(telegram.ext.CommandHandler("translate", translate))
-    dp.add_handler(telegram.ext.CommandHandler("notf", notf))
+    # dp.add_handler(telegram.ext.CommandHandler("translate", translate))
+    # dp.add_handler(telegram.ext.CommandHandler("notf", notf))
     
     dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
     
