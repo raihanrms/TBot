@@ -1,5 +1,5 @@
 # Importing all the packages from a separate file
-import logging
+from telegram import CallbackQuery
 from Packages import *
 
 # accessing the bot api token from the .env file
@@ -29,6 +29,8 @@ def start(update: Update, context: CallbackContext):
     # \n অনুগ্রহ করে ভাষা নির্বাচন করুন। """, reply_markup=kbd1)
     
 
+# Read: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/inlinekeyboard2.py
+
 def Help(update,context):
     #update.message.reply_text("""
     # The following commands are available:""")
@@ -50,18 +52,18 @@ def Help(update,context):
     keyboard2 = [
         [   
             InlineKeyboardButton("Start", callback_data="start"),
-            InlineKeyboardButton("Help", callback_data=str("help")),
+            InlineKeyboardButton("Help", callback_data="help"),
             InlineKeyboardButton("Get Time", callback_data="get_time"),
         ]]
 
     reply_markup = InlineKeyboardMarkup(keyboard2)
     update.message.reply_text("List of Commands:", reply_markup=reply_markup)
+    pass
 
 def get_time(update,context):
     now=datetime.now()
     dt_string=now.strftime("%d/%m/%Y %H:%M:%S")
     update.message.reply_text(f"Current Time is : {dt_string}")
-#     return contact
 
 # def contact(update,context):
 #     update.message.reply_text("""
@@ -69,7 +71,6 @@ def get_time(update,context):
 #     Name: N/A
 #     Email: N/A
 #     """)
-#     return videos
 
 # def videos(update,context):
 #     update.message.reply_text("""
@@ -106,13 +107,15 @@ def get_time(update,context):
 #     This is read the notifications from phone!
 #     """)
 
-def handle_message(update,context):
-    update.message.reply_text(f"You said {update.message.text}")
+def handle_commands(update,context):
+    """Handle all Commands."""
+    query: CallbackQuery = update.callback_query
+    query.answer()
+    query.edit_message_text(text=f"You selected: {query.data}")
 
-def echo(update: Update, context: CallbackContext):
-    """Echo the user message."""
-    update.message.reply_text("You just clicked on '%d'" % update.message.text)
-
+def error(update: Update, context: CallbackContext):
+    """Log Errors caused by Updates."""
+    sys.stderr.write("ERROR: '%s' caused by '%s'" % context.error, update)
     pass
 
 def main():
@@ -143,7 +146,9 @@ def main():
     # dp.add_handler(telegram.ext.CommandHandler("translate", translate))
     # dp.add_handler(telegram.ext.CommandHandler("notf", notf))
     
-    dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_message))
+    dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_commands))
+    dp.add_handler(telegram.ext.CallbackQueryHandler(handle_commands))
+    dp.add_error_handler(error)
     
     updater.start_polling()
     updater.idle()
