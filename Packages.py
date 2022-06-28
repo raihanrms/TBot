@@ -1,5 +1,6 @@
 import os
 import telegram
+import logging
 import pandas_datareader as web
 
 from logging import Filter
@@ -11,7 +12,7 @@ from urllib.request import Request
 from dotenv import load_dotenv
 from sqlalchemy import true
 from telegram import Bot, Location,Update
-from telegram.ext import Updater,CommandHandler,CallbackContext
+from telegram.ext import Updater, CommandHandler, CallbackContext
 from telegram.utils.request import Request
 from zmq import CONNECT_TIMEOUT
 from datetime import datetime
