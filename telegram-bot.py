@@ -30,6 +30,8 @@ def start(update: Update, context: CallbackContext):
     
 
 # Read: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/inlinekeyboard2.py
+#       https://github.com/lzzy12/python-aria-mirror-bot/blob/main/bot/__main__.py
+#       https://github.com/nimiology/spotify_downloader_telegram__bot
 
 def Help(update,context):
     #update.message.reply_text("""

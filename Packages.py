@@ -13,7 +13,7 @@ from urllib.request import Request
 from dotenv import load_dotenv
 from sqlalchemy import true
 from telegram import Bot, Location,Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler, CallbackContext, run_async
 from telegram.utils.request import Request
 from zmq import CONNECT_TIMEOUT
 from datetime import datetime
