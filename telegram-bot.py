@@ -32,6 +32,7 @@ def start(update: Update, context: CallbackContext):
 # Read: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/inlinekeyboard2.py
 #       https://github.com/lzzy12/python-aria-mirror-bot/blob/main/bot/__main__.py
 #       https://github.com/nimiology/spotify_downloader_telegram__bot
+#       
 
 def Help(update,context):
     #update.message.reply_text("""
@@ -115,6 +116,14 @@ def handle_commands(update,context):
     query.answer()
     query.edit_message_text(text=f"You selected: {query.data}")
 
+def message_handler(update,context):
+    if update.message.text == "/start":
+        start(update,context)
+    elif update.message.text == "/help":
+        Help(update,context)
+    elif update.message.text == "/gettime":
+        get_time(update,context)
+
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
     sys.stderr.write("ERROR: '%s' caused by '%s'" % context.error, update)
@@ -148,7 +157,7 @@ def main():
     # dp.add_handler(telegram.ext.CommandHandler("translate", translate))
     # dp.add_handler(telegram.ext.CommandHandler("notf", notf))
     
-    dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_commands))
+    # dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_commands))
     dp.add_handler(telegram.ext.CallbackQueryHandler(handle_commands))
     dp.add_error_handler(error)
     
