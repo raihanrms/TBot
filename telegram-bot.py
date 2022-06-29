@@ -114,15 +114,15 @@ def handle_commands(update,context):
     """Handle all Commands."""
     query: CallbackQuery = update.callback_query
     query.answer()
-    query.edit_message_text(text=f"You selected: {query.data}")
+    query.edit_message_text(text=f"You selected: {query.command}")
 
-def message_handler(update,context):
-    if update.message.text == "/start":
-        start(update,context)
-    elif update.message.text == "/help":
-        Help(update,context)
-    elif update.message.text == "/gettime":
-        get_time(update,context)
+# def message_handler(update,context):
+#     if update.message.text == "/start":
+#         start(update,context)
+#     elif update.message.text == "/help":
+#         Help(update,context)
+#     elif update.message.text == "/gettime":
+#         get_time(update,context)
 
 def error(update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
