@@ -127,10 +127,36 @@ def handle_commands(update,context):
 #     elif update.message.text == "/gettime":
 #         get_time(update,context)
 
-def error(update: Update, context: CallbackContext):
-    """Log Errors caused by Updates."""
-    sys.stderr.write("ERROR: '%s' caused by '%s'" % context.error, update)
-    pass
+# def error(update: Update, context: CallbackContext):
+#     """Log Errors caused by Updates."""
+#     sys.stderr.write("ERROR: '%s' caused by '%s'" % context.error, update)
+#     pass
+
+def gui():
+    layout = [[sg.Text('Bot Status: '), sg.Text('Stopped', key='status')],
+              [sg.Button('Start'), sg.Button('Stop'), sg.Exit()]]
+
+    window = sg.Window('Finxter Bot Tutorial', layout)
+
+    while True:
+        event, _ = window.read()
+            
+        if event == 'Start':
+            if update is None:
+                start()
+            else:
+                update.start_polling()
+            window.FindElement('status').Update('Running')
+        if event == 'Stop':
+            update.stop()
+            window.FindElement('status').Update('Stopped')
+
+        if event in (None, 'Exit'):
+            break
+
+    if update is not None and update.running:
+        update.stop()
+    window.close()
 
 def main():
     req=Request(connect_timeout=1.0)
@@ -143,8 +169,6 @@ def main():
     my_bot.set_my_commands(cmd)
     
     dp.add_handler(CommandHandler("start", start))
-    #dp.add_handler(CallbackQueryHandler(inlinebutton))
-
     dp.add_handler(telegram.ext.CommandHandler("help", Help))
     dp.add_handler(telegram.ext.CommandHandler("gettime", get_time))
     # dp.add_handler(telegram.ext.CommandHandler("contact", contact))
@@ -160,9 +184,9 @@ def main():
     # dp.add_handler(telegram.ext.CommandHandler("translate", translate))
     # dp.add_handler(telegram.ext.CommandHandler("notf", notf))
     
-    # dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_commands))
+    dp.add_handler(telegram.ext.MessageHandler(telegram.ext.Filters.text, handle_commands))
     dp.add_handler(telegram.ext.CallbackQueryHandler(handle_commands))
-    dp.add_error_handler(error)
+    #dp.add_error_handler(error)
     
     updater.start_polling()
     updater.idle()
