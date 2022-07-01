@@ -21,7 +21,7 @@
 | /notf | Notifications |
 
 #### Addition function
-> Bot will ask to add two numbers \n If correct, it sends a good message and ask for feedback. \n if mistakes were made, it sends another calculation and sends you away.
+> Bot will ask to add two numbers. If correct, it sends a good message and ask for feedback. If mistakes were made, it sends another calculation and sends you away. (Dumb but it's just a test)
 
 **Working on:**
 > Adding functionality to inline keyboard buttons so the user can interact with the bot.   
