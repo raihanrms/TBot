@@ -1,5 +1,6 @@
 import os
 import telegram
+import telegram.ext
 import logging
 import sys
 
@@ -21,6 +22,8 @@ from zmq import CONNECT_TIMEOUT
 from datetime import datetime
 from pyrogram import Client, filters
 from telebot import types
+from asyncio.subprocess import Process
+from telegram import CallbackQuery
 
 # from aiogram import Bot, Dispatcher, executor, types
 # from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
