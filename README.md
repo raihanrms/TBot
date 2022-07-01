@@ -9,9 +9,7 @@
 | /start | Start the bot |
 | /help | Help menu |
 | /gettime | Current date and time |
-| /contact | Contact details of the bot |
-| /video | Fetch YT-FB videos |
-| /stock | Stock from Yahoo Finance |
+
 
 #### Features that are currently under development:
 | Feature | Description |
@@ -21,6 +19,9 @@
 | /calculator | Calculator |
 | /translate | Translate text |
 | /notf | Notifications |
+
+#### Addition function
+> Bot will ask to add two numbers \n If correct, it sends a good message and ask for feedback. \n if mistakes were made, it sends another calculation and sends you away.
 
 **Working on:**
 > Adding functionality to inline keyboard buttons so the user can interact with the bot.   
