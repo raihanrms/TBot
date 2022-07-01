@@ -1,8 +1,5 @@
 # Importing all the packages from a separate file
-from asyncio.subprocess import Process
-from telegram import CallbackQuery
 from Packages import *
-
 # accessing the bot api token from the .env file
 load_dotenv()
 pwd=os.getenv("API_KEY")
