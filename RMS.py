@@ -30,3 +30,20 @@ def start(update_obj, context):
     # return to welcome state
     return WELCOME
 
+# helper function to get the current time
+def get_time():
+    # get the current time
+    time = datetime.datetime.now()
+    # return the time in a string
+    return time.strftime("%H:%M:%S")
+
+# welcome state to check if the user wants to be a part of the test
+def welcome(update_obj, context):
+    if update_obj.message.text.lower() in ['yes', 'no']:
+        # send the curent time
+        update_obj.message.reply_text(get_time())
+        # return to question state
+        return QUESTION
+    else:
+        # go to cancel state
+        return CANCEL
