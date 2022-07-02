@@ -1,11 +1,5 @@
 # Importing all the packages from a separate file
-from cgitb import handler
-
-import emoji
-from requests import request
 from Packages import *
-from tkinter.messagebox import CANCEL, QUESTION
-from random import randint
 
 # logging
 logging.basicConfig(
@@ -93,7 +87,7 @@ dispatcher = updater.dispatcher
 # a regular expression that matches yes or no
 yes_no_regex = re.compile(r'^(yes|no|y|n)$', re.IGNORECASE)
 # Create our ConversationHandler, with only one state
-handler = telegram.ext.ConversationHandler(
+handler1 = telegram.ext.ConversationHandler(
       entry_points=[telegram.ext.CommandHandler('start', start)],
       states={
             WELCOME: [telegram.ext.MessageHandler(telegram.ext.Filters.regex(yes_no_regex), welcome)],
@@ -105,7 +99,7 @@ handler = telegram.ext.ConversationHandler(
       )
 
 # add the handler to the dispatcher
-dispatcher.add_handler(handler)
+dispatcher.add_handler(handler1)
 # start polling for updates from Telegram
 updater.start_polling()
 # block until a signal (like one sent by CTRL+C) is sent

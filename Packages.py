@@ -12,6 +12,11 @@ from logging import Filter
 from urllib import response
 from matplotlib import ticker
 
+from requests import request
+from tkinter.messagebox import CANCEL, QUESTION
+from random import randint
+from cgitb import handler
+
 from turtle import update
 from urllib.request import Request
 from dotenv import load_dotenv
