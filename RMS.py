@@ -2,6 +2,7 @@
 from cgitb import handler
 
 import emoji
+from requests import request
 from Packages import *
 from tkinter.messagebox import CANCEL, QUESTION
 from random import randint
@@ -13,12 +14,6 @@ logging.basicConfig(
 # accessing the bot api token from the .env file
 load_dotenv()
 pwd=os.getenv("API_KEY")
-
-# updater object with api key
-updater = telegram.ext.Updater(pwd)
-
-# get dispatcher to add handlers
-dispatcher = updater.dispatcher
 
 # states as integers
 WELCOME = 0
@@ -38,7 +33,7 @@ def start(update_obj, context):
 # helper function, generates new numbers and sends the question
 def randomize_numbers(update_obj, context):
     # store the numbers in the context
-    context.user_data['rand_x'], context.user_data['rand_y'] = randint(0,1000), randint(0, 1000)
+    context.user_data['rand_x'], context.user_data['rand_y'] = randint(0,10000), randint(0, 10000)
     # send the question
     update_obj.message.reply_text(f"Calculate {context.user_data['rand_x']}+{context.user_data['rand_y']}")
 
@@ -88,6 +83,13 @@ def cancel(update_obj, context):
     )
     return telegram.ext.ConversationHandler.END
 
+def main():
+    req=Request(connect_timeout=1.0)
+    # updater object with api key
+updater = telegram.ext.Updater(pwd)
+    # get dispatcher to add handlers
+dispatcher = updater.dispatcher
+
 # a regular expression that matches yes or no
 yes_no_regex = re.compile(r'^(yes|no|y|n)$', re.IGNORECASE)
 # Create our ConversationHandler, with only one state
@@ -101,9 +103,14 @@ handler = telegram.ext.ConversationHandler(
       },
       fallbacks=[telegram.ext.CommandHandler('cancel', cancel)],
       )
+
 # add the handler to the dispatcher
 dispatcher.add_handler(handler)
 # start polling for updates from Telegram
 updater.start_polling()
 # block until a signal (like one sent by CTRL+C) is sent
 updater.idle()
+
+if __name__=="__main__":
+    main()
+    sys.exit(0)
