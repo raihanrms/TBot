@@ -14,6 +14,8 @@ WELCOME = 0
 QUESTION = 1
 CANCEL = 2
 CORRECT = 3
+HELP = 4
+
 
 # The entry function
 def start(update_obj, context):
@@ -77,6 +79,27 @@ def cancel(update_obj, context):
     )
     return telegram.ext.ConversationHandler.END
 
+def help(update_obj, context):
+    # get the user's first name
+    first_name = update_obj.message.from_user['first_name']
+    update_obj.message.reply_text("""
+    Hi {first_name}! The following commands are available:
+    /start - start the bot
+    /help - show this help
+    /get_time - get the current time
+    """)
+
+    helpInlineKeyboard = [
+        [   
+            InlineKeyboardButton("Start", callback_data="start"),
+            InlineKeyboardButton("Help", callback_data="help"),
+            InlineKeyboardButton("Get Time", callback_data="get_time"),
+        ]]
+    reply_markup = InlineKeyboardMarkup(helpInlineKeyboard)
+    update.message.reply_text("List of Commands:", reply_markup=reply_markup)
+    return HELP
+
+
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
@@ -98,8 +121,17 @@ handler1 = telegram.ext.ConversationHandler(
       fallbacks=[telegram.ext.CommandHandler('cancel', cancel)],
       )
 
+handler2 = telegram.ext.ConversationHandler(
+        entry_points=[telegram.ext.CommandHandler('help', help)],
+        states={
+                HELP: [telegram.ext.MessageHandler(telegram.ext.Filters.regex(yes_no_regex), help)],
+        },
+        fallbacks=[telegram.ext.CommandHandler('cancel', cancel)],
+        )
+
 # add the handler to the dispatcher
 dispatcher.add_handler(handler1)
+dispatcher.add_handler(handler2)
 # start polling for updates from Telegram
 updater.start_polling()
 # block until a signal (like one sent by CTRL+C) is sent

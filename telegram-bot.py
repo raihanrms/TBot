@@ -33,22 +33,22 @@ def start(update: Update, context: CallbackContext):
 #       
 
 def Help(update,context):
-    #update.message.reply_text("""
-    # The following commands are available:""")
-    # /start - Start the bot
-    # /help - Help menu
-    # /gettime - Current date and time
-    # /contact - Contact details of the bot
-    # /videos - Fetch YT-FB videos
-    # /stock - Stock from Yahoo Finance
+    update.message.reply_text("""
+    The following commands are available:
+    /start - Start the bot
+    /help - Help menu
+    /gettime - Current date and time
+    /contact - Contact details of the bot
+    /videos - Fetch YT-FB videos
+    /stock - Stock from Yahoo Finance
     
-    # TO DO:
-    # /getLoc - Recieve location
-    # /settings - Custom Settings
-    # /calc - Calculate some stuff
-    # /translate - Bangla to English
-    # /notf - Read notifications.
-    # """)
+    TO DO:
+    /getLoc - Recieve location
+    /settings - Custom Settings
+    /calc - Calculate some stuff
+    /translate - Bangla to English
+    /notf - Read notifications.
+    """)
 
     keyboard2 = [
         [   
