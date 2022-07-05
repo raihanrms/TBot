@@ -1,6 +1,4 @@
 # Importing all the packages from a separate file
-from logging import Logger
-from click import command
 from Packages import *
 
 # logging
@@ -84,6 +82,53 @@ def repeater(update, context):
     if context.user_data[repeater] == True:
         update.message.reply_text("You are already subscribed to the repeater")
 
+def random(update: Update, context: CallbackContext) -> None:
+    reply_buttons = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Basketball", callback_data='🏀')],
+        [
+            InlineKeyboardButton("Dice", callback_data='🎲'),
+            InlineKeyboardButton("Darts", callback_data='🎯'),
+        ]
+    ])
+    update.message.reply_text(
+        f'Hello {update.effective_user.first_name}, please choose an option:',
+        reply_markup=reply_buttons
+    )
+
+def button(update: Update, context: CallbackContext) -> None:
+    # Must call answer!
+    update.callback_query.answer()
+    # Remove buttons
+    update.callback_query.message.edit_reply_markup(
+        reply_markup=InlineKeyboardMarkup([])
+    )
+    update.callback_query.message.reply_dice(emoji=update.callback_query.data)
+
+def personal(update: Update, context: CallbackContext) -> int:
+    reply_list = [f'Hello {update.effective_user.first_name}']
+    if context.user_data:
+        reply_list.append('I know these things about you')
+        reply_list.extend([f'Your {key} {value_pair[0]} {value_pair[1]}' for (key, value_pair) in context.user_data.items()])
+    else:
+        reply_list.append('I don\'t know anything about you.')
+    reply_list.extend([
+        'Please tell me about yourself.',
+        'Use the format: My X is/have/are Y'
+    ])
+    update.message.reply_text('\n'.join(reply_list))
+
+INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
+def receive_info(update: Update, context: CallbackContext) -> int:
+    # Extract the three capture groups
+    info = re.match(INFO_REGEX, update.message.text).groups()
+    # Using the first capture group as key, the second and third capture group are saved as a pair to the context.user_data
+    context.user_data[info[0]] = (info[1], info[2])
+
+    # Quote the information in the reply
+    update.message.reply_text(
+        f'So your {info[0]} {info[1]} {info[2]}, how interesting'
+    )
+
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
@@ -106,11 +151,14 @@ handler1 = telegram.ext.ConversationHandler(
       )
 
 
-
 # add the handler to the dispatcher
 dispatcher.add_handler(handler1)
+dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
+updater.dispatcher.add_handler(CallbackQueryHandler(button))
+updater.dispatcher.add_handler(CommandHandler('personal', personal))
+updater.dispatcher.add_handler(MessageHandler(Filters.regex(INFO_REGEX), receive_info))
 
-dispatcher.add_handler(MessageHandler(Filters.text, repeater))
+dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
 
 # start polling for updates from Telegram
 updater.start_polling()
