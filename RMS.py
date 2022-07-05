@@ -1,4 +1,6 @@
 # Importing all the packages from a separate file
+from logging import Logger
+from click import command
 from Packages import *
 
 # logging
@@ -15,7 +17,6 @@ QUESTION = 1
 CANCEL = 2
 CORRECT = 3
 HELP = 4
-
 
 # The entry function
 def start(update_obj, context):
@@ -79,6 +80,10 @@ def cancel(update_obj, context):
     )
     return telegram.ext.ConversationHandler.END
 
+def repeater(update, context):
+    if context.user_data[repeater] == True:
+        update.message.reply_text("You are already subscribed to the repeater")
+
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
@@ -101,8 +106,11 @@ handler1 = telegram.ext.ConversationHandler(
       )
 
 
+
 # add the handler to the dispatcher
 dispatcher.add_handler(handler1)
+
+dispatcher.add_handler(MessageHandler(Filters.text, repeater))
 
 # start polling for updates from Telegram
 updater.start_polling()
