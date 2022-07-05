@@ -14,7 +14,6 @@ WELCOME = 0
 QUESTION = 1
 CANCEL = 2
 CORRECT = 3
-HELP = 4
 
 # The entry function
 def start(update_obj, context):
