@@ -132,7 +132,7 @@ def receive_info(update: Update, context: CallbackContext) -> int:
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
-updater = telegram.ext.Updater(pwd)
+updater = telegram.ext.Updater(pwd, persistence=PicklePersistence(filename='bot_data'))
     # get dispatcher to add handlers
 dispatcher = updater.dispatcher
 
