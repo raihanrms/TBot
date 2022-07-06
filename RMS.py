@@ -69,6 +69,7 @@ def correct(update_obj, context):
     update_obj.message.reply_text(f"See you {first_name}!, bye")
     return telegram.ext.ConversationHandler.END
 
+# cancel state
 def cancel(update_obj, context):
     # get the user's first name
     first_name = update_obj.message.from_user['first_name']
@@ -77,10 +78,12 @@ def cancel(update_obj, context):
     )
     return telegram.ext.ConversationHandler.END
 
+# checks for new updates
 def repeater(update, context):
     if context.user_data[repeater] == True:
         update.message.reply_text("You are already subscribed to the repeater")
 
+# generates buttons with emoji to display a little sticker
 def random(update: Update, context: CallbackContext) -> None:
     reply_buttons = InlineKeyboardMarkup([
         [InlineKeyboardButton("Basketball", callback_data='🏀')],
@@ -94,6 +97,7 @@ def random(update: Update, context: CallbackContext) -> None:
         reply_markup=reply_buttons
     )
 
+# calling the button fuction for the random sticker fuction
 def button(update: Update, context: CallbackContext) -> None:
     # Must call answer!
     update.callback_query.answer()
@@ -103,6 +107,7 @@ def button(update: Update, context: CallbackContext) -> None:
     )
     update.callback_query.message.reply_dice(emoji=update.callback_query.data)
 
+# checks and stores personal information in data file for future refercence
 def personal(update: Update, context: CallbackContext) -> int:
     reply_list = [f'Hello {update.effective_user.first_name}']
     if context.user_data:
@@ -116,6 +121,7 @@ def personal(update: Update, context: CallbackContext) -> int:
     ])
     update.message.reply_text('\n'.join(reply_list))
 
+# accepts only these parameters from the user
 INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
 def receive_info(update: Update, context: CallbackContext) -> int:
     # Extract the three capture groups
