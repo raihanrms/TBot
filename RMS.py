@@ -134,9 +134,6 @@ def receive_info(update: Update, context: CallbackContext) -> int:
         f'So your {info[0]} {info[1]} {info[2]}, how interesting'
     )
 
-# ask user for location and phone number
-
-
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
