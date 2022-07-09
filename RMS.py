@@ -122,13 +122,16 @@ def personal(update: Update, context: CallbackContext) -> int:
     update.message.reply_text('\n'.join(reply_list))
 
 # Ask location and contact info
-def location(update: Update, context: CallbackContext) -> None:
+def ContactLocation(update: Update, context: CallbackContext) -> None:
     location_keyboard = telegram.KeyboardButton(text='Send location', request_location=True)
     contact_keyboard = telegram.KeyboardButton(text='Send contact', request_contact=True)
     CL = [[location_keyboard, contact_keyboard]]
     reply_markup = telegram.ReplyKeyboardMarkup(CL)
-    
 
+    update.message.reply_text(
+        f'Hello {update.effective_user.first_name}, would you share these information',
+        reply_markup=reply_markup)
+    
 # accepts only these parameters from the user
 INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
 def receive_info(update: Update, context: CallbackContext) -> int:
@@ -170,8 +173,10 @@ dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(CommandHandler('personal', personal))
 updater.dispatcher.add_handler(MessageHandler(Filters.regex(INFO_REGEX), receive_info))
+updater.dispatcher.add_handler(CommandHandler('ContactLocation', ContactLocation))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
+
 
 # start polling for updates from Telegram
 updater.start_polling()
