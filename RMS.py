@@ -121,6 +121,14 @@ def personal(update: Update, context: CallbackContext) -> int:
     ])
     update.message.reply_text('\n'.join(reply_list))
 
+# Ask location and contact info
+def location(update: Update, context: CallbackContext) -> None:
+    location_keyboard = telegram.KeyboardButton(text='Send location', request_location=True)
+    contact_keyboard = telegram.KeyboardButton(text='Send contact', request_contact=True)
+    CL = [[location_keyboard, contact_keyboard]]
+    reply_markup = telegram.ReplyKeyboardMarkup(CL)
+    
+
 # accepts only these parameters from the user
 INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
 def receive_info(update: Update, context: CallbackContext) -> int:
