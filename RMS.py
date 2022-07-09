@@ -126,7 +126,7 @@ def ContactLocation(update: Update, context: CallbackContext) -> None:
     location_keyboard = telegram.KeyboardButton(text='Send location', request_location=True)
     contact_keyboard = telegram.KeyboardButton(text='Send contact', request_contact=True)
     CL = [[location_keyboard, contact_keyboard]]
-    reply_markup = telegram.ReplyKeyboardMarkup(CL)
+    reply_markup = telegram.ReplyKeyboardMarkup(CL, resize_keyboard=True, one_time_keyboard=true)
 
     update.message.reply_text(
         f'Hello {update.effective_user.first_name}, would you share these information',
