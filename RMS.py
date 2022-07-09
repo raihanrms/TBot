@@ -83,6 +83,17 @@ def repeater(update, context):
     if context.user_data[repeater] == True:
         update.message.reply_text("You are already subscribed to the repeater")
 
+# Ask location and contact info
+def conloc(update: Update, context: CallbackContext) -> None:
+    location_keyboard = telegram.KeyboardButton(text='Send location', request_location=True)
+    contact_keyboard = telegram.KeyboardButton(text='Send contact', request_contact=True)
+    CL = [[location_keyboard, contact_keyboard]]
+    reply_markup = telegram.ReplyKeyboardMarkup(CL, resize_keyboard=True, one_time_keyboard=true)
+
+    update.message.reply_text(
+        'Hello {update.effective_user.first_name}, would you share these information',
+        reply_markup=reply_markup)
+
 # generates buttons with emoji to display a little sticker
 def random(update: Update, context: CallbackContext) -> None:
     reply_buttons = InlineKeyboardMarkup([
@@ -108,7 +119,7 @@ def button(update: Update, context: CallbackContext) -> None:
     update.callback_query.message.reply_dice(emoji=update.callback_query.data)
 
 # checks and stores personal information in data file for future refercence
-def personal(update: Update, context: CallbackContext) -> int:
+def personal(update: Update, context: CallbackContext):
     reply_list = [f'Hello {update.effective_user.first_name}']
     if context.user_data:
         reply_list.append('I know these things about you')
@@ -120,17 +131,6 @@ def personal(update: Update, context: CallbackContext) -> int:
         'Use the format: My X is/have/are Y'
     ])
     update.message.reply_text('\n'.join(reply_list))
-
-# Ask location and contact info
-def ContactLocation(update: Update, context: CallbackContext) -> None:
-    location_keyboard = telegram.KeyboardButton(text='Send location', request_location=True)
-    contact_keyboard = telegram.KeyboardButton(text='Send contact', request_contact=True)
-    CL = [[location_keyboard, contact_keyboard]]
-    reply_markup = telegram.ReplyKeyboardMarkup(CL, resize_keyboard=True, one_time_keyboard=true)
-
-    update.message.reply_text(
-        f'Hello {update.effective_user.first_name}, would you share these information',
-        reply_markup=reply_markup)
     
 # accepts only these parameters from the user
 INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
@@ -142,7 +142,7 @@ def receive_info(update: Update, context: CallbackContext) -> int:
 
     # Quote the information in the reply
     update.message.reply_text(
-        f'So your {info[0]} {info[1]} {info[2]}, how interesting'
+        f'So your {info[0]} {info[1]} {info[2]}, how interesting!'
     )
 
 def main():
@@ -171,9 +171,9 @@ handler1 = telegram.ext.ConversationHandler(
 dispatcher.add_handler(handler1)
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
+updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
 updater.dispatcher.add_handler(CommandHandler('personal', personal))
 updater.dispatcher.add_handler(MessageHandler(Filters.regex(INFO_REGEX), receive_info))
-updater.dispatcher.add_handler(CommandHandler('ContactLocation', ContactLocation))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
 
