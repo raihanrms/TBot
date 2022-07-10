@@ -7,6 +7,7 @@
 | Command | Description |
 |:-------|-----------|
 | /start | Dislplay all information |
+| /settings | Bilingual Support (EN/BN) |
 | /add2verify | Add two numbers |
 | /echo | Help menu |
 | /random | Send emoji (3 options) |
@@ -17,7 +18,6 @@
 #### Features that are currently under development:
 | Feature | Description |
 |:-------|-----------|
-| /settings | Bilingual Support (EN/BN) |
 | /translate | Real-time Translation |
 | /channel | Find YT channel with search ID |
 | /comments | Get comments from last 10 YT videos |
