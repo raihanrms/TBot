@@ -6,13 +6,13 @@
 #### The following commands are available:
 | Command | Description |
 |:-------|-----------|
-| **/start** | _Dislplay all information_ |
-| **/settings** | _Bilingual Support (EN/BN)_ |
-| **/add2verify** | _Add two numbers_ |
-| **/echo** | _Help menu_ |
-| **/random** | _Send emoji (3 options)_ |
-| **/personal** | _Let the bot know about you (Buggy)_ |
-| **/conloc** | _Send contact and location information_ |
+| **/start** | Dislplay all information |
+| **/settings** | Bilingual Support (EN/BN) |
+| **/add2verify** | Add two numbers |
+| **/echo** | Help menu |
+| **/random** | Send emoji (3 options) |
+| **/personal** | Let the bot know about you (Buggy) |
+| **/conloc** | Send contact and location information |
 
 
 #### Features that are currently under development:
