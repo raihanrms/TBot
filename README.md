@@ -6,19 +6,19 @@
 #### The following commands are available:
 | Command | Description |
 |:-------|-----------|
-| /start | Start the bot with Addition task |
+| /start | Dislplay all information |
+| /add2verify | Add two numbers |
 | /echo | Help menu |
 | /random | Send emoji (3 options) |
-| /personal | Let the bot know about you |
+| /personal | Let the bot know about you (Buggy) |
 | /conloc | Send contact and location information |
 
 
 #### Features that are currently under development:
 | Feature | Description |
 |:-------|-----------|
-| /settings | Settings menu |
-| /translate | Translate text |
-| /notf | Notifications |
+| /settings | Bilingual Support (EN/BN) |
+| /translate | Real-time Translation |
 | /channel | Find YT channel with search ID |
 | /comments | Get comments from last 10 YT videos |
 

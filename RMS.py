@@ -15,8 +15,38 @@ QUESTION = 1
 CANCEL = 2
 CORRECT = 3
 
-# The entry function
-def start(update_obj, context):
+# The start function 
+def start(update, context):
+    update.message.reply_text("""
+    The bot is still in development, while you wait
+    you can check out the following features that has
+    been implemented:
+    /start - Display this start message
+    /settings - Bilingual support (EN/BN)
+    /add2verify - Add two numbers
+    /random - Send emoji (3 options)
+    /conloc - Send contact and location information
+    
+    TO DO:
+    /channel - Find YT channel with search ID
+    /comments - Fetch YT comments from last 10 YT videos
+    /translate - Add real-time translation to your messages
+    """)
+
+# Bilingual suppot
+def settings(update: Update, context: CallbackContext) -> None:
+    EnKey = telegram.KeyboardButton(text='English (EN)')
+    BnKey = telegram.KeyboardButton(text='বাংলা (BN)')
+    LanKey = [[EnKey, BnKey]]
+    reply_markup = telegram.ReplyKeyboardMarkup(LanKey, resize_keyboard=True, one_time_keyboard=true)
+
+    update.message.reply_text(
+        f'Hello {update.effective_user.first_name}! Which language do you prefer? English (EN) or বাংলা (BN)?',
+        reply_markup=reply_markup)
+
+
+# The Add2Verify function
+def Add2Verify(update_obj, context):
     # send the question, and show the keyboard markup (suggested answers)
     update_obj.message.reply_text("Hello there, do you want to answer a question? (Yes/No)",
         reply_markup=telegram.ReplyKeyboardMarkup([['Yes', 'No']], resize_keyboard=True, one_time_keyboard=True)
@@ -85,13 +115,13 @@ def repeater(update, context):
 
 # Ask location and contact info
 def conloc(update: Update, context: CallbackContext) -> None:
-    location_keyboard = telegram.KeyboardButton(text='Send location', request_location=True)
-    contact_keyboard = telegram.KeyboardButton(text='Send contact', request_contact=True)
-    CL = [[location_keyboard, contact_keyboard]]
-    reply_markup = telegram.ReplyKeyboardMarkup(CL, resize_keyboard=True, one_time_keyboard=true)
+    EnKey = telegram.KeyboardButton(text='Send location', request_location=True)
+    BnKey = telegram.KeyboardButton(text='Send contact', request_contact=True)
+    LanKey = [[EnKey, BnKey]]
+    reply_markup = telegram.ReplyKeyboardMarkup(LanKey, resize_keyboard=True, one_time_keyboard=true)
 
     update.message.reply_text(
-        'Hello {update.effective_user.first_name}, would you share these information',
+        f'Hello {update.effective_user.first_name}, would you share these information?',
         reply_markup=reply_markup)
 
 # generates buttons with emoji to display a little sticker
@@ -117,19 +147,7 @@ def button(update: Update, context: CallbackContext) -> None:
         reply_markup=InlineKeyboardMarkup([])
     )
     update.callback_query.message.reply_dice(emoji=update.callback_query.data)
-  
-# accepts only these parameters from the user
-INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
-def receive_info(update: Update, context: CallbackContext) -> int:
-    # Extract the three capture groups
-    info = re.match(INFO_REGEX, update.message.text).groups()
-    # Using the first capture group as key, the second and third capture group are saved as a pair to the context.user_data
-    context.user_data[info[0]] = (info[1], info[2])
 
-    # Quote the information in the reply
-    update.message.reply_text(
-        f'So your {info[0]} {info[1]} {info[2]}, how interesting!'
-    )
 
 def main():
     req=Request(connect_timeout=1.0)
@@ -142,7 +160,7 @@ dispatcher = updater.dispatcher
 yes_no_regex = re.compile(r'^(yes|no|y|n)$', re.IGNORECASE)
 # Create our ConversationHandler, with only one state
 handler1 = telegram.ext.ConversationHandler(
-      entry_points=[telegram.ext.CommandHandler('start', start)],
+      entry_points=[telegram.ext.CommandHandler('Add2Verify', Add2Verify)],
       states={
             WELCOME: [telegram.ext.MessageHandler(telegram.ext.Filters.regex(yes_no_regex), welcome)],
             QUESTION: [telegram.ext.MessageHandler(telegram.ext.Filters.regex(r'^\d+$'), question)],
@@ -154,14 +172,14 @@ handler1 = telegram.ext.ConversationHandler(
 
 
 # add the handler to the dispatcher
+dispatcher.add_handler(telegram.ext.CommandHandler('start', start))
+dispatcher.add_handler(telegram.ext.CommandHandler('settings', settings))
 dispatcher.add_handler(handler1)
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
-updater.dispatcher.add_handler(MessageHandler(Filters.regex(INFO_REGEX), receive_info))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
-
 
 # start polling for updates from Telegram
 updater.start_polling()
