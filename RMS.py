@@ -5,6 +5,13 @@ from Packages import *
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+# prints bot is running with start time
+print("Bot is running...")
+timezonelist = ['Asia/Dhaka']
+for zone in timezonelist:
+    now = datetime.now(timezone(zone))
+print(now.strftime('%Y/%m/%d %I:%M:%S'))
+
 # accessing the bot api token from the .env file
 load_dotenv()
 pwd=os.getenv("API_KEY")
