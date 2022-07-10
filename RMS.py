@@ -117,21 +117,7 @@ def button(update: Update, context: CallbackContext) -> None:
         reply_markup=InlineKeyboardMarkup([])
     )
     update.callback_query.message.reply_dice(emoji=update.callback_query.data)
-
-# checks and stores personal information in data file for future refercence
-def personal(update: Update, context: CallbackContext):
-    reply_list = [f'Hello {update.effective_user.first_name}']
-    if context.user_data:
-        reply_list.append('I know these things about you')
-        reply_list.extend([f'Your {key} {value_pair[0]} {value_pair[1]}' for (key, value_pair) in context.user_data.items()])
-    else:
-        reply_list.append('I don\'t know anything about you.')
-    reply_list.extend([
-        'Please tell me about yourself.',
-        'Use the format: My X is/have/are Y'
-    ])
-    update.message.reply_text('\n'.join(reply_list))
-    
+  
 # accepts only these parameters from the user
 INFO_REGEX = r'^My (.+) (is|have|are) (.+)$'
 def receive_info(update: Update, context: CallbackContext) -> int:
@@ -172,7 +158,6 @@ dispatcher.add_handler(handler1)
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
-updater.dispatcher.add_handler(CommandHandler('personal', personal))
 updater.dispatcher.add_handler(MessageHandler(Filters.regex(INFO_REGEX), receive_info))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
