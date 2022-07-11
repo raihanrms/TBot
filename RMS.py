@@ -156,6 +156,10 @@ def button(update: Update, context: CallbackContext) -> None:
     update.callback_query.message.reply_dice(emoji=update.callback_query.data)
 
 
+# fetching youtube comments 
+def comments(update: Update, context: CallbackContext) -> None:
+    
+
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
