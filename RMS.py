@@ -14,13 +14,16 @@ print(now.strftime('%Y/%m/%d %I:%M:%S'))
 
 # accessing the bot api token from the .env file
 load_dotenv()
-pwd=os.getenv("API_KEY")
+pwd=os.getenv("TELEGRAM_API_KEY")
+YKey=os.getenv("YOUTUBE_API_KEY")
+channel_id = "UCjXfkj5iapKHJrhYfAF9ZGg"
 
 # states as integers
 WELCOME = 0
 QUESTION = 1
 CANCEL = 2
 CORRECT = 3
+channelData = 4
 
 # The start function 
 def start(update, context):
@@ -156,9 +159,26 @@ def button(update: Update, context: CallbackContext) -> None:
     update.callback_query.message.reply_dice(emoji=update.callback_query.data)
 
 
-# fetching youtube comments 
-def comments(update: Update, context: CallbackContext) -> None:
+# fetching youtube channel stats
+def channelStats(youtube, channel_id):
+    request = youtube.channels().list(
+                part="snippit,contentDetails,statistics",
+                id=channel_id)
+
+    response = request.execute()
+
+    channelData = dict(ChannelName = response['items'][0]['snippet']['title'],
+                       Subscribers = response['items'][0]['statistics']['subscriberCount'],
+                       Views = response['items'][0]['statistics']['viewCount'],
+                       TotalVideos = response['items'][0]['statistics']['videoCount'])
     
+    return channelData
+
+def channelData(object_id, update, context):
+    youtube = build('youtube', 'v3', YKey)
+    channel_id = object_id
+    channelData = channelStats(youtube, channel_id)
+    update.message.reply_text(f"Channel Name: {channelData['ChannelName']}\nSubscribers: {channelData['Subscribers']}\nViews: {channelData['Views']}\nTotal Videos: {channelData['TotalVideos']}")
 
 def main():
     req=Request(connect_timeout=1.0)
@@ -189,6 +209,7 @@ dispatcher.add_handler(handler1)
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
+updater.dispatcher.add_handler(CommandHandler('channel', channelData))
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
 
