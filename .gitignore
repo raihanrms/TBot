@@ -3,3 +3,5 @@ __pycache__
 bot_data
 
 personality.py
+comments.py
+regex.py
