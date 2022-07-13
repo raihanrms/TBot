@@ -174,6 +174,9 @@ def channelStats(youtube, channel_id):
     
     return channelData
 
+# find regex matches in the text
+# def findRegex(text, regex):
+
 def channelData(object_id, update, context):
     youtube = build('youtube', 'v3', YKey)
     channel_id = object_id
