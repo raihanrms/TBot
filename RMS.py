@@ -24,6 +24,7 @@ QUESTION = 1
 CANCEL = 2
 CORRECT = 3
 channelData = 4
+getYTID = 5
 
 # The start function 
 def start(update, context):
@@ -123,6 +124,14 @@ def repeater(update, context):
     if context.user_data[repeater] == True:
         update.message.reply_text("You are already subscribed to the repeater")
 
+# get youtube id from youtube url
+def getYTID(update, videoURL):
+    update.message.reply_text("Please enter the youtube url")
+    videoID = str(videoURL).split('/')
+    videoID = videoID[-1]
+    return videoID
+
+
 # Ask location and contact info
 def conloc(update: Update, context: CallbackContext) -> None:
     EnKey = telegram.KeyboardButton(text='Send location', request_location=True)
@@ -211,6 +220,7 @@ dispatcher.add_handler(telegram.ext.CommandHandler('settings', settings))
 dispatcher.add_handler(handler1)
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
+updater.dispatcher.add_handler(telegram.ext.CommandHandler('getYTID', getYTID))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
 updater.dispatcher.add_handler(CommandHandler('channel', channelData))
 
