@@ -55,3 +55,10 @@ from pytz import timezone
 from googleapiclient.discovery import build
 import pandas as pd
 import seaborn as sns
+
+# location function
+import PIL.Image
+import PIL.ExifTags
+import webbrowser
+from geopy.geocoders import Nominatim
+from gmplot import gmplot
