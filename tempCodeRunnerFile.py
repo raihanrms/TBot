@@ -1,1 +1,0 @@
-dispatcher.add_handler(handler2)
