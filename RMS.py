@@ -211,7 +211,28 @@ def handle_photo(update, context):
     img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-print(handle_photo)
+    # get the location from the image
+    image = np.array([img])
+
+    exif = {
+        PIL.ExifTags.TAGS[k]: v
+        for k, v in image._getexif().items()
+        if k in PIL.ExifTags.TAGS
+    }
+
+    if 'GPSInfo' in exif:
+        north = exif['GPSInfo'][2]
+        east = exif['GPSInfo'][4]
+        lat = north[0][0] + (north[1][0] / 60) + (north[2][0] / 3600)
+        lon = east[0][0] + (east[1][0] / 60) + (east[2][0] / 3600)
+        lat, lon = float(lat), float(lon)
+        update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
+
+    else:
+        update.message.reply_text("No location found")
+
+    
+
 
 def main():
     req=Request(connect_timeout=1.0)
