@@ -1,4 +1,5 @@
 # Importing all the packages from a separate file
+from io import BytesIO
 from Packages import *
 
 # logging
@@ -197,28 +198,21 @@ def getLoc(update, context):
     update.message.reply_text("Please send me a photo")
     context.user_data['photo'] = True
 
-    # handle image sent to bot
-# def image(update, context):
-#     if context.user_data['photo'] == True:
-#         exif = {
-#             PIL.ExifTags.TAGS[k]: v
-#             for k, v in image._getexif().items()
-#             if k in PIL.ExifTags.TAGS
-#         }
+from io import BytesIO
+import numpy as np
 
-#         if 'GPSInfo' in exif:
-#             lat = exif['GPSInfo'][2][0][0] / float(exif['GPSInfo'][2][0][1])
-#             lon = exif['GPSInfo'][4][0][0] / float(exif['GPSInfo'][4][0][1])
-#             update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
-#         else:
-#             update.message.reply_text("No location found")
+    # handle image sent to bot
+def handle_photo(update, context):
+    file = context.bot.get_file(update.message.photo[-1].file_id)
+    f = BytesIO(file.download_as_bytearray())
+    file_bytes = np.asarray(bytearray(f.read()), dtype=np.uint8)
 
 
 
 def main():
     req=Request(connect_timeout=1.0)
     # updater object with api key
-updater = telegram.ext.Updater(pwd, persistence=PicklePersistence(filename='bot_data'))
+updater = telegram.ext.Updater(pwd, use_context=true, persistence=PicklePersistence(filename='bot_data'))
     # get dispatcher to add handlers
 dispatcher = updater.dispatcher
 
@@ -256,7 +250,7 @@ updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(telegram.ext.CommandHandler('getYTID', getYTID))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
 updater.dispatcher.add_handler(CommandHandler('channel', channelData))
-# updater.dispatcher.add_handler(MessageHandler(Filters.photo, getLoc))
+updater.dispatcher.add_handler(MessageHandler(Filters.photo, handle_photo))
 
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
