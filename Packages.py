@@ -60,5 +60,8 @@ import seaborn as sns
 import PIL.Image
 import PIL.ExifTags
 import webbrowser
+from io import BytesIO
+import numpy as np
+import cv2
 from geopy.geocoders import Nominatim
 from gmplot import gmplot

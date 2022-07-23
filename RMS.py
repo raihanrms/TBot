@@ -200,14 +200,18 @@ def getLoc(update, context):
 
 from io import BytesIO
 import numpy as np
+import cv2
 
-    # handle image sent to bot
+# handle image sent to bot
 def handle_photo(update, context):
     file = context.bot.get_file(update.message.photo[-1].file_id)
     f = BytesIO(file.download_as_bytearray())
     file_bytes = np.asarray(bytearray(f.read()), dtype=np.uint8)
 
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+print(handle_photo)
 
 def main():
     req=Request(connect_timeout=1.0)
