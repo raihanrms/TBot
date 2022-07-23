@@ -210,26 +210,36 @@ def handle_photo(update, context):
 
     img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    cv2.imwrite('test1.jpg', img)
+    update.message.reply_text("Image received")
 
     # get the location from the image
-    image = np.array([img])
+    array = np.arange(0, 60000, 1, dtype=np.uint8)
+    image = PIL.Image.fromarray(array)
+    image.save('test1.jpg')
 
-    exif = {
-        PIL.ExifTags.TAGS[k]: v
-        for k, v in image._getexif().items()
-        if k in PIL.ExifTags.TAGS
-    }
+    update.message.reply_text("Photo saved as test1.jpg")
 
-    if 'GPSInfo' in exif:
-        north = exif['GPSInfo'][2]
-        east = exif['GPSInfo'][4]
-        lat = north[0][0] + (north[1][0] / 60) + (north[2][0] / 3600)
-        lon = east[0][0] + (east[1][0] / 60) + (east[2][0] / 3600)
-        lat, lon = float(lat), float(lon)
-        update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
+    # pimage = PIL.Image.open('test1.jpg')
 
-    else:
-        update.message.reply_text("No location found")
+    from get_location import get_location
+    get_location()
+    # exif = {
+    #     PIL.ExifTags.TAGS[k]: v
+    #     for k, v in pimage._getexif().items()
+    #     if k in PIL.ExifTags.TAGS
+    # }
+
+    # if 'GPSInfo' in exif:
+    #     north = exif['GPSInfo'][2]
+    #     east = exif['GPSInfo'][4]
+    #     lat = north[0][0] + (north[1][0] / 60) + (north[2][0] / 3600)
+    #     lon = east[0][0] + (east[1][0] / 60) + (east[2][0] / 3600)
+    #     lat, lon = float(lat), float(lon)
+    #     update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
+
+    # else:
+    #     update.message.reply_text("No location found")
 
     
 
