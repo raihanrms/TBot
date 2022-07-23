@@ -198,20 +198,20 @@ def getLoc(update, context):
     context.user_data['photo'] = True
 
     # handle image sent to bot
-def image(update, context):
-    if context.user_data['photo'] == True:
-        exif = {
-            PIL.ExifTags.TAGS[k]: v
-            for k, v in image._getexif().items()
-            if k in PIL.ExifTags.TAGS
-        }
+# def image(update, context):
+#     if context.user_data['photo'] == True:
+#         exif = {
+#             PIL.ExifTags.TAGS[k]: v
+#             for k, v in image._getexif().items()
+#             if k in PIL.ExifTags.TAGS
+#         }
 
-        if 'GPSInfo' in exif:
-            lat = exif['GPSInfo'][2][0][0] / float(exif['GPSInfo'][2][0][1])
-            lon = exif['GPSInfo'][4][0][0] / float(exif['GPSInfo'][4][0][1])
-            update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
-        else:
-            update.message.reply_text("No location found")
+#         if 'GPSInfo' in exif:
+#             lat = exif['GPSInfo'][2][0][0] / float(exif['GPSInfo'][2][0][1])
+#             lon = exif['GPSInfo'][4][0][0] / float(exif['GPSInfo'][4][0][1])
+#             update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
+#         else:
+#             update.message.reply_text("No location found")
 
 
 
@@ -256,7 +256,7 @@ updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(telegram.ext.CommandHandler('getYTID', getYTID))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
 updater.dispatcher.add_handler(CommandHandler('channel', channelData))
-updater.dispatcher.add_handler(MessageHandler(Filters.photo, getLoc))
+# updater.dispatcher.add_handler(MessageHandler(Filters.photo, getLoc))
 
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
