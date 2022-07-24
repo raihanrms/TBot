@@ -1,4 +1,5 @@
 # Importing all the packages from a separate file
+from email import message
 from io import BytesIO
 from Packages import *
 
@@ -198,70 +199,16 @@ def getLoc(update, context):
     update.message.reply_text("Please send me a photo")
     context.user_data['photo'] = True
 
+from get_location import get_location
+
 # handle image sent to bot
-# def handle_photo(update, context):
-#     file = context.bot.get_file(update.message.photo[-1].file_id)
-#     f = BytesIO(file.download_as_bytearray())
-#     file_bytes = np.asarray(bytearray(f.read()), dtype=np.uint8)
-
-#     img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-#     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-#     cv2.imwrite('test1.jpg', img)
-#     update.message.reply_text("Image received")
-
-#     # get the location from the image
-#     array = np.arange(0, 60000, 1, dtype=np.uint8)
-#     image = PIL.Image.fromarray(array)
-#     image.save('test1.jpg')
-
-#     update.message.reply_text("Photo saved as test1.jpg")
- 
-def get_image_id_from_message(Update, context):
-  # there are multiple array of images, check the biggest
-  return Update.photo[len(Update.photo)-1].file_id
-
-
-def save_image_from_message(update, context):
-    cid = Update.chat.id
-    image_id = get_image_id_from_message(Update)
-
-    update.send_message(cid, '🔥 Saving image, be patient ! 🔥')
-
-    # prepare image for downlading
-    file_path = update.get_file(image_id).file_path
+def handle_photo(update: Update, context: CallbackContext):
+    file = context.bot.get_file(update.message.photo[-1].file_id)
+    f =  BytesIO(file.download_as_bytearray())
+    get_location()
     
-    # generate image download url
-    image_url = "https://api.telegram.org/file/bot{0}/{1}".format(pwd['TELEGRAM_API_KEY'], file_path)
-    print(image_url)
-
-    # create folder to store pic temporary, if it doesnt exist
-    if not os.path.exists(result_storage_path):
-        os.makedirs(result_storage_path)
-
-    # retrieve and save image
-    image_name = "{0}.jpg".format(image_id)
-    urllib.request.urlretrieve(image_url, "{0}/{1}".format(result_storage_path,image_name))
-
-    # pimage = PIL.Image.open('test1.jpg')
-
-    # from get_location import get_location
-    # get_location()
-    # exif = {
-    #     PIL.ExifTags.TAGS[k]: v
-    #     for k, v in pimage._getexif().items()
-    #     if k in PIL.ExifTags.TAGS
-    # }
-
-    # if 'GPSInfo' in exif:
-    #     north = exif['GPSInfo'][2]
-    #     east = exif['GPSInfo'][4]
-    #     lat = north[0][0] + (north[1][0] / 60) + (north[2][0] / 3600)
-    #     lon = east[0][0] + (east[1][0] / 60) + (east[2][0] / 3600)
-    #     lat, lon = float(lat), float(lon)
-    #     update.message.reply_text(f"Latitude: {lat}\nLongitude: {lon}")
-
-    # else:
-    #     update.message.reply_text("No location found")
+    response = "Image received!"
+    context.bot.send_message(chat_id=update.message.chat_id, text=response)
 
 
 def main():
@@ -300,14 +247,16 @@ dispatcher.add_handler(telegram.ext.CommandHandler('start', start))
 dispatcher.add_handler(telegram.ext.CommandHandler('settings', settings))
 dispatcher.add_handler(handler1)
 # dispatcher.add_handler(handler2)
+
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(telegram.ext.CommandHandler('getYTID', getYTID))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
 updater.dispatcher.add_handler(CommandHandler('channel', channelData))
-# updater.dispatcher.add_handler(MessageHandler(Filters.photo, handle_photo))
-updater.dispatcher.add_handler(MessageHandler(Filters.photo, get_image_id_from_message))
-updater.dispatcher.add_handler(MessageHandler(Filters.photo, save_image_from_message))
+updater.dispatcher.add_handler(MessageHandler(Filters.photo, handle_photo))
+
+photo_handler = MessageHandler(Filters.photo, handle_photo)
+dispatcher.add_handler(photo_handler)
 
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
