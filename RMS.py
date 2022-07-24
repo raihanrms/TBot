@@ -205,10 +205,11 @@ from get_location import get_location
 def handle_photo(update: Update, context: CallbackContext):
     file = context.bot.get_file(update.message.photo[-1].file_id)
     f =  BytesIO(file.download_as_bytearray())
-    get_location()
     
-    response = "Image received!"
-    context.bot.send_message(chat_id=update.message.chat_id, text=response)
+    f.download('image.jpg')
+    #get_location()
+
+    context.bot.send_message(chat_id=update.message.chat_id, text=get_location())
 
 
 def main():
