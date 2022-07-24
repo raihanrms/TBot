@@ -25,6 +25,7 @@ QUESTION = 1
 CANCEL = 2
 CORRECT = 3
 
+result_storage_path = 'tmp' 
 
 # The start function 
 def start(update, context):
@@ -198,39 +199,31 @@ def getLoc(update, context):
     context.user_data['photo'] = True
 
 # handle image sent to bot
-def handle_photo(update, context):
-    file = context.bot.get_file(update.message.photo[-1].file_id)
-    f = BytesIO(file.download_as_bytearray())
-    file_bytes = np.asarray(bytearray(f.read()), dtype=np.uint8)
+# def handle_photo(update, context):
+#     file = context.bot.get_file(update.message.photo[-1].file_id)
+#     f = BytesIO(file.download_as_bytearray())
+#     file_bytes = np.asarray(bytearray(f.read()), dtype=np.uint8)
 
-    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    cv2.imwrite('test1.jpg', img)
-    update.message.reply_text("Image received")
+#     img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+#     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#     cv2.imwrite('test1.jpg', img)
+#     update.message.reply_text("Image received")
 
-    # get the location from the image
-    array = np.arange(0, 60000, 1, dtype=np.uint8)
-    image = PIL.Image.fromarray(array)
-    image.save('test1.jpg')
+#     # get the location from the image
+#     array = np.arange(0, 60000, 1, dtype=np.uint8)
+#     image = PIL.Image.fromarray(array)
+#     image.save('test1.jpg')
 
-    update.message.reply_text("Photo saved as test1.jpg")
-
-
-def log_request(message):
-  file = open('.data/logs.txt', 'a') #append to file
-  file.write("{0} - {1} {2} [{3}]\n".format(datetime.datetime.now(), message.from_user.first_name, message.from_user.last_name, message.from_user.id)) 
-  print("{0} - {1} {2} [{3}]".format(datetime.datetime.now(), message.from_user.first_name, message.from_user.last_name, message.from_user.id))
-  file.close() 
-  
-
-def get_image_id_from_message(message):
+#     update.message.reply_text("Photo saved as test1.jpg")
+ 
+def get_image_id_from_message(Update, context):
   # there are multiple array of images, check the biggest
-  return message.photo[len(message.photo)-1].file_id
+  return Update.photo[len(Update.photo)-1].file_id
 
 
-def save_image_from_message(message):
-    cid = message.chat.id
-    image_id = get_image_id_from_message(message)
+def save_image_from_message(update, context):
+    cid = Update.chat.id
+    image_id = get_image_id_from_message(Update)
 
     update.send_message(cid, '🔥 Saving image, be patient ! 🔥')
 
@@ -242,12 +235,12 @@ def save_image_from_message(message):
     print(image_url)
 
     # create folder to store pic temporary, if it doesnt exist
-    if not os.path.exists('.data/temp'):
-        os.makedirs('.data/temp')
+    if not os.path.exists(result_storage_path):
+        os.makedirs(result_storage_path)
 
     # retrieve and save image
     image_name = "{0}.jpg".format(image_id)
-    urllib.request.urlretrieve(image_url, "{0}/{1}".format('.data/temp',image_name))
+    urllib.request.urlretrieve(image_url, "{0}/{1}".format(result_storage_path,image_name))
 
     # pimage = PIL.Image.open('test1.jpg')
 
