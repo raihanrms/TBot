@@ -200,16 +200,55 @@ def getLoc(update, context):
     context.user_data['photo'] = True
 
 from get_location import get_location
+import base64
 
 # handle image sent to bot
 def handle_photo(update: Update, context: CallbackContext):
     file = context.bot.get_file(update.message.photo[-1].file_id)
-    f =  BytesIO(file.download_as_bytearray())
-    
-    f.download('image.jpg')
+    fS =  BytesIO(file.download_as_bytearray())
+    update.send_message(f"File ID: {file.file_id}")
+
+
+    with open('{0}.jpg', 'wb') as f:
+        f.write(fS.getvalue())
+    fS.close()
+
+    fS.save('image.jpg')
     #get_location()
 
-    context.bot.send_message(chat_id=update.message.chat_id, text=get_location())
+    image = cv2.imread('image.jpg')
+
+    exif = {
+        PIL.ExifTags.TAGS[k]: v
+        for k, v in image._getexif().items()
+        if k in PIL.ExifTags.TAGS
+}
+    # print(exif['GPSInfo'])
+
+    north = exif['GPSInfo'][2]
+    east = exif['GPSInfo'][4]
+
+    # print(north)
+    # print(east)
+
+    lat = ((((north[0] * 60) + north[1]) * 60) + north[2]) / 3600
+    lon = ((((east[0] * 60) + east[1]) * 60) + east[2]) / 3600
+
+    lat, lon = float(lat), float(lon)
+
+    response1 = print(lat, lon)
+
+
+    gmap = gmplot.GoogleMapPlotter(lat, lon, 12)
+    gmap.marker(lat, lon, 'cornflowerblue')
+    gmap.draw("location.html")
+
+    geoLoc = Nominatim(user_agent="myapplication")
+    location = geoLoc.reverse(f"{lat}, {lon}")
+    print(location.address)
+
+    webbrowser.open("location.html", new=2)
+    context.bot.send_message(chat_id=update.message.chat_id, text=response1())
 
 
 def main():
