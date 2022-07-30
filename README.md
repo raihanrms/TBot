@@ -11,7 +11,7 @@
 | **/echo** | Help menu |
 | **/random** | Send emoji (3 options) |
 | **/conloc** | Send contact and location information |
-| _exifdata_ | Send a photo to know where it was taken |
+| _**exifdata**_ | Send a photo to know where it was taken |
 
 
 #### Features that are currently under development:
