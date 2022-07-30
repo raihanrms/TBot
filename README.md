@@ -36,6 +36,7 @@
 **Instructions to try it out**
 > Try it out by searching the bot on telegram (@R1M2S3Bot)  
 > Coming soon...  
+---
 
 
 **`Time spent on this project`**
