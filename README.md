@@ -33,6 +33,11 @@
 **Working on:**
 > Adding functionality to inline keyboard buttons so the user can interact with the bot.   
 
+**Instructions to try it out**
+> Try it out by searching the bot on telegram (@R1M2S3Bot)  
+> Coming soon...  
+
+
 > Time spent on this project
 
 [![wakatime](https://wakatime.com/badge/user/0602677e-e1f1-4ba7-90c1-770c3a600207/project/359e1b74-6519-493d-8045-68ff46564e48.svg)](https://wakatime.com/badge/user/0602677e-e1f1-4ba7-90c1-770c3a600207/project/359e1b74-6519-493d-8045-68ff46564e48)
