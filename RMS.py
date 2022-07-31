@@ -273,31 +273,21 @@ handler1 = telegram.ext.ConversationHandler(
       fallbacks=[telegram.ext.CommandHandler('cancel', cancel)],
       )
 
-# a regular expression to extract the youtube channel id
-# YTregex = r'(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w\-]{10,12})([\&\?\#].*)?$'
-
-# handler2 = telegram.ext.ConversationHandler(
-#     detectLink = [telegram.ext.CommandHandler('getYTID', getYTID)],
-#     states={
-#         getYTID: [telegram.ext.MessageHandler(telegram.ext.Filters.regex(YTregex), channelData)],}     
-# )
-
 # add the handler to the dispatcher
 dispatcher.add_handler(telegram.ext.CommandHandler('start', start))
 dispatcher.add_handler(telegram.ext.CommandHandler('settings', settings))
 dispatcher.add_handler(handler1)
-# dispatcher.add_handler(handler2)
 
 dispatcher.add_handler(telegram.ext.CommandHandler('random', random))
 updater.dispatcher.add_handler(CallbackQueryHandler(button))
 updater.dispatcher.add_handler(telegram.ext.CommandHandler('getYTID', getYTID))
 updater.dispatcher.add_handler(CommandHandler('conloc', conloc))
 updater.dispatcher.add_handler(CommandHandler('channel', channelData))
+
 updater.dispatcher.add_handler(MessageHandler(Filters.photo, handle_photo))
 
 photo_handler = MessageHandler(Filters.photo, handle_photo)
 dispatcher.add_handler(photo_handler)
-
 
 dispatcher.add_handler(telegram.ext.CommandHandler('repeater', repeater))
 
