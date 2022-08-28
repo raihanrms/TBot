@@ -35,7 +35,7 @@
 
 **Instructions to try it out**
 > Try it out by searching the bot on telegram (@R1M2S3Bot)  
-> Coming soon...  
+> New functions will be added soon, mixed with js magic.  
 ---
 
 
