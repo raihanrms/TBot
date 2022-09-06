@@ -196,13 +196,13 @@ while flag:
 
             # up press korle highlighted box up e move hobe
             if event.key == pygame.K_UP:
-                y-= 1
+                x-= 1
                 flag1 = 1
             
             # down press korle highlighted box down e move hobe
             if event.key == pygame.K_DOWN:
                 
-                y+= 1
+                x+= 1
                 flag1 = 1   
             if event.key == pygame.K_1:
                 value = 1
