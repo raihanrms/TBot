@@ -1,5 +1,6 @@
 ## Telegram Bot with Python
 
+> Working on updating the bot to make use out of it.
 #### Language Feature: BN/EN
 > `Multilingual settings will be available soon!`
 
